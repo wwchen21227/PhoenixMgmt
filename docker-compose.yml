@@ -1,0 +1,17 @@
+mysql:
+  build: './data-scripts'
+  ports: 
+    - 3306:3306
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+   
+web:
+  build: '.'
+  restart: always
+  volumes:
+    - './dist:/data'
+  ports:
+    - 8080:8080
+    - 4848:4848
+  links:
+    - mysql:mysql
