@@ -3,22 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthenticateRESTService.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/authenticate/service/AuthenticateService.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/service/ProgramService.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/web/WEB-INF/web.xml</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/web/WEB-INF/beans.xml</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/web/test-resbeans.js</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/dao/ProgramDAO.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/web/test-resbeans.html</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/service/ReviewSelectProgramService.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/dao/impl/ProgramDAOImpl.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/delegate/ProgramDelegate.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/web/WEB-INF/glassfish-web.xml</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/entity/RPSearchObject.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/UserDao.java</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/conf/MANIFEST.MF</file>
-            <file>file:/Users/sourcepirate/mtech/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/restful/ProgramRESTService.java</file>
+            <file>file:/Users/wengweichen/ISSNUS/SOFTWARE%20ANALYSIS%20&amp;%20DESIGN/CA/PhoenixMgmt/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmd.java</file>
         </group>
     </open-files>
 </project-private>
