@@ -23,3 +23,11 @@ docker-compose kill
 docker-compose rm
 docker-compose up
 ```
+
+## User REST API
+http://localhost:8080/phoenix/rest/user/{rest action below}
+
+* /all
+* /update
+* /create
+* /delete/{id}
