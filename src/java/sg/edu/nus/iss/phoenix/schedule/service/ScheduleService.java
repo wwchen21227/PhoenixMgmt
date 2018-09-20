@@ -197,7 +197,7 @@ public class ScheduleService {
 		
 	}
 
-	public void processDeletewS(Date startDate) {
+	public void processDeleteWS(Date startDate) {
 
             try {
                 WeeklySchedule ws = new WeeklySchedule(startDate);
