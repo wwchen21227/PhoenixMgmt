@@ -23,7 +23,7 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDao;
 /**
- * RadioProgram Data Access Object (DAO). This class contains all database
+ * AnnualSchedule Data Access Object (DAO). This class contains all database
  * handling that is needed to permanently store and retrieve AnnualSchedule object
  * instances.
  */
@@ -330,8 +330,8 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 				valueObject.setAssignedBy(result.getString("assingedBy"));
 
 			} else {
-				// System.out.println("RadioProgram Object Not Found!");
-				throw new NotFoundException("RadioProgram Object Not Found!");
+				// System.out.println("AnnualSchedule Object Not Found!");
+				throw new NotFoundException("AnnualSchedule Object Not Found!");
 			}
 		} finally {
 			if (result != null)

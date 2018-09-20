@@ -113,8 +113,8 @@ public class AnnualSchedule implements Cloneable, Serializable {
         StringBuilder out = new StringBuilder();
         out.append("\nAnnualSchedule class, mapping to table annual-schedule\n");
         out.append("Persistent attributes: \n"); 
-        out.append("name = ").append(this.year).append("\n"); 
-        out.append("description = ").append(this.assingedBy).append("\n"); 
+        out.append("year = ").append(this.year).append("\n"); 
+        out.append("assingedBy = ").append(this.assingedBy).append("\n"); 
         return out.toString();
     }
     

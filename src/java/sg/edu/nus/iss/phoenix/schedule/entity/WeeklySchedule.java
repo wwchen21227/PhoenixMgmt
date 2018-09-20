@@ -112,10 +112,10 @@ public class WeeklySchedule implements Cloneable, Serializable {
         @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
-        out.append("\nAnnualSchedule class, mapping to table annual-schedule\n");
+        out.append("\nWeeklySchedule class, mapping to table weekly-schedule\n");
         out.append("Persistent attributes: \n"); 
-        out.append("name = ").append(this.startDate).append("\n"); 
-        out.append("description = ").append(this.assignedBy).append("\n"); 
+        out.append("startDate = ").append(this.startDate).append("\n"); 
+        out.append("assignedBy = ").append(this.assignedBy).append("\n"); 
         return out.toString();
     }
     

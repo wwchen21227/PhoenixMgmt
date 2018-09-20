@@ -24,7 +24,7 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDao;
 /**
- * RadioProgram Data Access Object (DAO). This class contains all database
+ * WeeklySchedule Data Access Object (DAO). This class contains all database
  * handling that is needed to permanently store and retrieve WeeklySchedule object
  * instances.
  */
@@ -331,8 +331,8 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 				valueObject.setAssignedBy(result.getString("assignedBy"));
 
 			} else {
-				// System.out.println("RadioProgram Object Not Found!");
-				throw new NotFoundException("RadioProgram Object Not Found!");
+				// System.out.println("WeeklySchedule Object Not Found!");
+				throw new NotFoundException("WeeklySchedule Object Not Found!");
 			}
 		} finally {
 			if (result != null)
