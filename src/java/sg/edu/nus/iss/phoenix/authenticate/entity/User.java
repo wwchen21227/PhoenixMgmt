@@ -38,6 +38,12 @@ public class User implements Cloneable, Serializable {
 
 	}
 
+        public User(String idIn, String nameIn, ArrayList<Role> roles) {
+            this.id = idIn;
+            this.name = nameIn;
+            this.roles = roles;
+	}
+        
 	/**
 	 * Get- and Set-methods for persistent variables. The default behaviour does
 	 * not make any checks against malformed data, so these might require some
