@@ -24,9 +24,9 @@ public class ProducerDaoImpl implements ProducerDao {
     
     private Connection connection;
     
-    private static final String QUERY_ALL = "select * from user where role like '%prodcuer%'";
+    private static final String QUERY_ALL = "select * from user where role like '%producer%'";
     private static final String QUERY_ID = "select * from user where id = ?";
-    private static final String QUERY_SEARCH = "select * from user where role like '%producer%' and name = '%?'";
+    private static final String QUERY_SEARCH = "select * from user where role like '%producer%' and name like '?'";
     
     public ProducerDaoImpl(){
         super();
@@ -48,9 +48,10 @@ public class ProducerDaoImpl implements ProducerDao {
     public User selectProducer(String id) throws NotFoundException, SQLException {
         //To change body of generated methods, choose Tools | Templates.
         PreparedStatement stmt = this.connection.prepareStatement(QUERY_ID);
-        stmt.setString(0, id);
+        stmt.setString(1, id);
         User user;
         try(ResultSet result = stmt.executeQuery()){
+           result.next();
            user = this.getUserFromResult(result);
         } finally {
             stmt.close();
@@ -62,8 +63,17 @@ public class ProducerDaoImpl implements ProducerDao {
     public List<User> searchMatching(String prefix) throws NotFoundException, SQLException {
         //To change body of generated methods, choose Tools | Templates.
         PreparedStatement stmt = this.connection.prepareStatement(QUERY_SEARCH);
-        stmt.setString(0, prefix);
-        return this.listUsers(stmt);
+        if(prefix == null){
+            prefix = "";
+        }
+        stmt.setString(0,  prefix + "%");
+        try {
+          return this.listUsers(stmt);
+        }
+        catch(SQLException e){
+            System.out.println(stmt);
+            throw e;
+        }
     }
     
     private Connection openConnection() {

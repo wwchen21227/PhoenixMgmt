@@ -14,30 +14,28 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.PresentorDao;
 import sg.edu.nus.iss.phoenix.authenticate.dao.ProducerDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
-
 /**
  *
  * @author sourcepirate
  */
-public class ProducerService {
+public class PresentorService {
     private DAOFactoryImpl factory;
-    private ProducerDao producerDao;
+    private PresentorDao presentorDao;
     
-    public ProducerService(){
-        super();
+    public PresentorService(){
         factory = new DAOFactoryImpl();
-        producerDao = factory.getProducerDao();
+        presentorDao = factory.getPresenterDao();
     }
     
-    public User getProducer(String id) throws NotFoundException, SQLException{
-        return producerDao.selectProducer(id);
+    public User getPresentor(String id) throws NotFoundException, SQLException{
+        return presentorDao.selectPresentor(id);
     }
     
-    public List<User> searchProducer(String prefix) throws NotFoundException, SQLException {
-        return producerDao.searchMatching(prefix);
+    public List<User> searchPresentor(String prefix) throws NotFoundException, SQLException {
+        return presentorDao.searchMatching(prefix);
     }
     
     public List<User> getAll() throws NotFoundException, SQLException {
-        return producerDao.getAll();
+        return presentorDao.getAll();
     }
 }

@@ -24,9 +24,9 @@ public class PresentorDaoImpl implements PresentorDao {
 
     private Connection connection;
 
-    private static final String QUERY_ALL = "select * from user where role like '%presentor%'";
+    private static final String QUERY_ALL = "select * from user where role like '%presenter%'";
     private static final String QUERY_ID = "select * from user where id = ?";
-    private static final String QUERY_SEARCH = "select * from user where role like '%presentor%' and name = '%?'";
+    private static final String QUERY_SEARCH = "select * from user where role like '%presenter%' and name like '?'";
 
     public PresentorDaoImpl() {
         super();
@@ -51,6 +51,7 @@ public class PresentorDaoImpl implements PresentorDao {
         stmt.setString(0, id);
         User user;
         try(ResultSet result = stmt.executeQuery()){
+           result.next();
            user = this.getUserFromResult(result);
         } finally {
             stmt.close();
@@ -62,7 +63,7 @@ public class PresentorDaoImpl implements PresentorDao {
     public List<User> searchMatching(String prefix) throws NotFoundException, SQLException {
         //To change body of generated methods, choose Tools | Templates.
         PreparedStatement stmt = this.connection.prepareStatement(QUERY_SEARCH);
-        stmt.setString(0, prefix);
+        stmt.setString(0, prefix + "%");
         return this.listUsers(stmt);
     }
 
