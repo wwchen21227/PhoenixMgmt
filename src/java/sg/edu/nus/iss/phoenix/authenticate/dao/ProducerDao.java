@@ -17,13 +17,13 @@ public interface ProducerDao {
      * instance.
      * @return
      */
-    public abstract User CreateValueObject();
+    public abstract User createValueObject();
     
     /**
      * method is used by any object to list all producer instances
      * @return
      */
-    public abstract List<User> getAll();
+    public abstract List<User> getAll() throws SQLException;
 
     /**
      *
@@ -31,7 +31,7 @@ public interface ProducerDao {
      * @return
      * @throws NotFoundException
      */
-    public abstract User selectProducer(String id) throws NotFoundException;
+    public abstract User selectProducer(String id) throws NotFoundException, SQLException;
     
     /**
      *
@@ -39,5 +39,5 @@ public interface ProducerDao {
      * @return
      * @throws NotFoundException
      */
-    public abstract List<User> searchMatching(String prefix) throws NotFoundException;
+    public abstract List<User> searchMatching(String prefix) throws NotFoundException, SQLException;
 }

@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.phoenix.authenticate.dao;
 
 import java.util.List;
+import java.sql.SQLException;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
@@ -20,13 +21,13 @@ public interface PresentorDao {
      * instance.
      * @return
      */
-    public abstract User CreateValueObject();
+    public abstract User createValueObject();
     
     /**
      * method is used by any object to list all producer instances
      * @return
      */
-    public abstract List<User> getAll();
+    public abstract List<User> getAll() throws SQLException;
 
     /**
      *
@@ -34,7 +35,8 @@ public interface PresentorDao {
      * @return
      * @throws NotFoundException
      */
-    public abstract User selectPresentor(String id) throws NotFoundException;
+    public abstract User selectPresentor(String id) 
+            throws NotFoundException, SQLException;
     
     /**
      *
@@ -42,5 +44,6 @@ public interface PresentorDao {
      * @return
      * @throws NotFoundException
      */
-    public abstract List<User> searchMatching(String prefix) throws NotFoundException;   
+    public abstract List<User> searchMatching(String prefix)
+            throws NotFoundException, SQLException;   
 }
