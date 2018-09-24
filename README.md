@@ -31,3 +31,15 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 * /update
 * /create
 * /delete/{id}
+
+## Producer API
+
+* /producer/all
+* /producer/id/{id}
+* /producer/search?q={prefix}
+
+## Presentor API
+* /presentor/all
+* /presentor/id/{id}
+* /presentor/search?q={prefix}
+

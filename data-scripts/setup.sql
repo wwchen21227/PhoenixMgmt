@@ -1,1 +1,3 @@
-GRANT ALL ON phoenix.* TO 'phoenix'@'localhost' IDENTIFIED BY 'password';
+
+use mysql;
+GRANT ALL PRIVILEGES ON *.* TO 'phoenix'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
