@@ -26,6 +26,7 @@ public class DAOFactoryImpl implements DAOFactory {
     private final WeeklyScheduleDao wsdao = new WeeklyScheduleDAOImpl();
     private final PresentorDao predao = new PresentorDaoImpl();
     private final ProducerDao prodao = new ProducerDaoImpl();
+    private final ProgramSlotDao psdao = new ProgramSlotDAOImpl();
 
     @Override
     public UserDao getUserDAO() {
