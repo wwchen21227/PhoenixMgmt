@@ -9,11 +9,13 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAOImpl;
 import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDao;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDao;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDao;
 import sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDAOImpl;
 import sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDAOImpl;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.PresentorDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.ProducerDaoImpl;
+import sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDAOImpl;
 
 public class DAOFactoryImpl implements DAOFactory {
 
@@ -24,6 +26,7 @@ public class DAOFactoryImpl implements DAOFactory {
     private final WeeklyScheduleDao wsdao = new WeeklyScheduleDAOImpl();
     private final PresentorDao predao = new PresentorDaoImpl();
     private final ProducerDao prodao = new ProducerDaoImpl();
+    private final ProgramSlotDao psdao = new ProgramSlotDAOImpl();
 
     @Override
     public UserDao getUserDAO() {
@@ -64,4 +67,10 @@ public class DAOFactoryImpl implements DAOFactory {
     public PresentorDao getPresenterDao() {
         return predao; //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public ProgramSlotDao getProgramSlotDAO() {
+      // TODO Auto-generated method stub
+		  return psdao;
+	  }
 }

@@ -7,7 +7,7 @@ package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
 
 import java.sql.Connection;
@@ -15,62 +15,64 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
-import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDao;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDao;
 /**
- * AnnualSchedule Data Access Object (DAO). This class contains all database
- * handling that is needed to permanently store and retrieve AnnualSchedule object
+ * ProgramSlotDao Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve ProgramSlot object
  * instances.
  */
-public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
+public class ProgramSlotDAOImpl implements ProgramSlotDao {
     
     Connection connection;
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#createValueObject()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#createValueObject()
 	 */
 	@Override
-	public AnnualSchedule createValueObject() {
-		return new AnnualSchedule();
+	public ProgramSlot createValueObject() {
+		return new ProgramSlot();
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#getObject(java.lang.String)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#getObject(java.lang.String)
 	 */
 	@Override
-	public AnnualSchedule getObject(Integer year) throws NotFoundException,
+	public ProgramSlot getObject(Date dateOfProgram) throws NotFoundException,
 			SQLException {
 
-		AnnualSchedule valueObject = createValueObject();
-		valueObject.setYear(year);
+		ProgramSlot valueObject = createValueObject();
+                valueObject.setDateOfProgram(dateOfProgram);
+                
 		load(valueObject);
 		return valueObject;
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#load(sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#load(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void load(AnnualSchedule valueObject) throws NotFoundException,
+	public void load(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getYear()== null) {
+		if (valueObject.getDateOfProgram()== null ) {
 			// System.out.println("Can not select without Primary-Key!");
 			throw new NotFoundException("Can not select without Primary-Key!");
 		}
 
-		String sql = "SELECT * FROM `annual-schedule` WHERE (`name` = ? ); ";
+		String sql = "SELECT * FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, valueObject.getYear());
-
+			stmt.setDate(1, valueObject.getDateOfProgram());
 			singleQuery(stmt, valueObject);
 
 		} finally {
@@ -81,13 +83,13 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#loadAll()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#loadAll()
 	 */
 	@Override
-	public List<AnnualSchedule> loadAll() throws SQLException {
+	public List<ProgramSlot> loadAll() throws SQLException {
 		openConnection();
-		String sql = "SELECT * FROM `annual-schedule` ORDER BY `name` ASC; ";
-		List<AnnualSchedule> searchResults = listQuery(connection
+		String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` ASC; ";
+		List<ProgramSlot> searchResults = listQuery(connection
 				.prepareStatement(sql));
 		closeConnection();
 		System.out.println("record size"+searchResults.size());
@@ -95,21 +97,28 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#create(sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#create(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public synchronized void create(AnnualSchedule valueObject)
+	public synchronized void create(ProgramSlot valueObject)
 			throws SQLException {
 
 		String sql = "";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `annual-schedule` (`year`, `assingedBy`) VALUES (?,?); ";
+			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`,`startTime`,"
+                                + "`program-name`,`WeeklyScheduleId`,`Producer`,`Presenter`) VALUES (?,?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, valueObject.getYear());
-			stmt.setString(2, valueObject.getAssignedBy());
+                        stmt.setTime(1, valueObject.getDuration());
+                        stmt.setDate(2, valueObject.getDateOfProgram());
+			stmt.setDate(3, valueObject.getStartTime());
+			stmt.setString(4, valueObject.getProgramName());
+                        stmt.setInt(5, valueObject.getWeeklyScheduleId());
+                        stmt.setString(6, valueObject.getProducer());
+                        stmt.setString(7, valueObject.getPresenter());
 			int rowcount = databaseUpdate(stmt);
+                        
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
 				throw new SQLException("PrimaryKey Error when updating DB!");
@@ -124,20 +133,22 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#save(sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#save(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void save(AnnualSchedule valueObject) throws NotFoundException,
+	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `annual-schedule` SET `assingedBY` = ? WHERE (`year` = ? ); ";
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `startTime` = ?,"
+                        + "`Producer` = ?, `Presenter` = ? WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getAssignedBy());
-
-			stmt.setInt(2, valueObject.getYear());
+			stmt.setTime(1, valueObject.getDuration());
+                        stmt.setDate(2, valueObject.getStartTime());
+			stmt.setString(3, valueObject.getProducer());
+                        stmt.setString(4, valueObject.getPresenter());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -158,23 +169,23 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#delete(sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#delete(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void delete(AnnualSchedule valueObject) throws NotFoundException,
+	public void delete(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getYear() == null) {
+		if (valueObject.getDateOfProgram() == null) {
 			// System.out.println("Can not delete without Primary-Key!");
 			throw new NotFoundException("Can not delete without Primary-Key!");
 		}
 
-		String sql = "DELETE FROM `annual-schedule` WHERE (`year` = ? ); ";
+		String sql = "DELETE FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, valueObject.getYear());
+			stmt.setDate(1, valueObject.getDateOfProgram());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -195,12 +206,12 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#deleteAll(java.sql.Connection)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#deleteAll(java.sql.Connection)
 	 */
 	@Override
 	public void deleteAll(Connection conn) throws SQLException {
 
-		String sql = "DELETE FROM `radio-program`";
+		String sql = "DELETE FROM `program-slot`";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
@@ -216,12 +227,12 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#countAll()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#countAll()
 	 */
 	@Override
 	public int countAll() throws SQLException {
 
-		String sql = "SELECT count(*) FROM `annual-schedule`";
+		String sql = "SELECT count(*) FROM `program-slot`";
 		PreparedStatement stmt = null;
 		ResultSet result = null;
 		int allRows = 0;
@@ -243,35 +254,75 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.AnnualScheduleDao#searchMatching(sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#searchMatching(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public List<AnnualSchedule> searchMatching(AnnualSchedule valueObject) throws SQLException {
+	public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
 
                 @SuppressWarnings("UnusedAssignment")
-		List<AnnualSchedule> searchResults = new ArrayList<>();
+		List<ProgramSlot> searchResults = new ArrayList<>();
 		openConnection();
 		boolean first = true;
 		StringBuilder sql = new StringBuilder(
-				"SELECT * FROM `annual-schedule` WHERE 1=1 ");
+				"SELECT * FROM `program-slot` WHERE 1=1 ");
 
-		if (valueObject.getYear() != null) {
+		if (valueObject.getProgramName() != null) {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `year` LIKE '").append(valueObject.getYear())
+			sql.append("AND `program-name` LIKE '").append(valueObject.getProgramName())
 					.append("%' ");
 		}
 
-		if (valueObject.getAssignedBy()!= null) {
+		if (valueObject.getDuration()!= null) {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `assignedBy` LIKE '").append(valueObject.getAssignedBy())
+			sql.append("AND `duration` LIKE '").append(valueObject.getDuration())
+					.append("%' ");
+		}
+                
+                if (valueObject.getDateOfProgram()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `dateOfProgram` LIKE '").append(valueObject.getDateOfProgram())
+					.append("%' ");
+		}
+                
+                if (valueObject.getStartTime()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `startTime` LIKE '").append(valueObject.getStartTime())
+					.append("%' ");
+		}
+                
+                if (valueObject.getWeeklyScheduleId()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `weeklyScheduleId` LIKE '").append(valueObject.getWeeklyScheduleId())
+					.append("%' ");
+		}
+                
+                if (valueObject.getPresenter()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `presenter` LIKE '").append(valueObject.getPresenter())
+					.append("%' ");
+		}
+                
+                if (valueObject.getProducer()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `producer` LIKE '").append(valueObject.getProducer())
 					.append("%' ");
 		}
 
-		sql.append("ORDER BY `year` ASC ");
+		sql.append("ORDER BY `dateOfProgram` ASC ");
 
 		// Prevent accidential full table results.
 		// Use loadAll if all rows must be returned.
@@ -316,7 +367,7 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-	protected void singleQuery(PreparedStatement stmt, AnnualSchedule valueObject)
+	protected void singleQuery(PreparedStatement stmt, ProgramSlot valueObject)
 			throws NotFoundException, SQLException {
 
 		ResultSet result = null;
@@ -325,13 +376,18 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 			result = stmt.executeQuery();
 
 			if (result.next()) {
+                                valueObject.setDuration(result.getTime("duration"));
+                                valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
+                                valueObject.setStartTime(result.getDate("startTime"));
+                                valueObject.setProgramName(result.getString("program-name"));
+                                valueObject.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
+                                valueObject.setProducer(result.getString("producer"));
+                                valueObject.setPresenter(result.getString("presenter"));
 
-				valueObject.setYear(result.getInt("year"));
-				valueObject.setAssignedBy(result.getString("assingedBy"));
 
 			} else {
-				// System.out.println("AnnualSchedule Object Not Found!");
-				throw new NotFoundException("AnnualSchedule Object Not Found!");
+				// System.out.println("ProgramSlot Object Not Found!");
+				throw new NotFoundException("ProgramSlot Object Not Found!");
 			}
 		} finally {
 			if (result != null)
@@ -353,20 +409,25 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
      * @return 
      * @throws java.sql.SQLException
 	 */
-	protected List<AnnualSchedule> listQuery(PreparedStatement stmt) throws SQLException {
+	protected List<ProgramSlot> listQuery(PreparedStatement stmt) throws SQLException {
 
-		ArrayList<AnnualSchedule> searchResults = new ArrayList<>();
+		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
 		ResultSet result = null;
 		openConnection();
 		try {
 			result = stmt.executeQuery();
 
 			while (result.next()) {
-				AnnualSchedule temp = createValueObject();
+				ProgramSlot temp = createValueObject();
 
-				temp.setYear(result.getInt("year"));
-				temp.setAssignedBy(result.getString("assingedBy"));
-
+                                temp.setDuration(result.getTime("duration"));
+                                temp.setDateOfProgram(result.getDate("dateOfProgram"));
+                                temp.setStartTime(result.getDate("startTime"));
+                                temp.setProgramName(result.getString("program-name"));
+                                temp.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
+                                temp.setProducer(result.getString("producer"));
+                                temp.setPresenter(result.getString("presenter"));
+                                
 				searchResults.add(temp);
 			}
 
@@ -378,7 +439,7 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 			closeConnection();
 		}
 
-		return (List<AnnualSchedule>) searchResults;
+		return (List<ProgramSlot>) searchResults;
 	}
 
 	private void openConnection() {

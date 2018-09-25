@@ -24,6 +24,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 import java.sql.Date;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  * REST Web Service
@@ -66,6 +67,25 @@ public class ScheduleRESTService {
         }
 
         return assList;
+    }
+      /**
+     * GET method for searching an instance of resource
+     * @param year year for the resource
+     */
+    @GET
+    @Path("/getAnnualScheduleByYear/{year}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public AnnualSchedule getAnnualScheduleByYear(@PathParam("year") Integer year) {
+        String year2;
+        try { 
+            year2 = URLDecoder.decode(year+"", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+            return null;
+        }
+        
+        AnnualSchedule aslist = service.findAS(year);
+        return aslist;
     }
     
     /**
@@ -126,6 +146,28 @@ public class ScheduleRESTService {
         return wssList;
     }
     
+     /**
+     * GET method for searching an instance of resource
+     * @param date startDate for the resource
+     */
+    
+    @GET
+    @Path("/getWeeklyScheduleByDate/{startdate}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public WeeklySchedule getWeeklyScheduleByDate(@PathParam("wsstartdate") Date startDate) {
+        
+        String startDate2;
+        try { 
+            startDate2 = URLDecoder.decode(startDate+"", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+            return null;
+        }
+        
+        WeeklySchedule wslist = service.findWSbyDate(startDate);
+        return wslist;
+    }
+    
     /**
      * PUT method for updating or creating an instance of resource
      * @param content representation for the resource
@@ -150,12 +192,12 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param startdate startdate of the resource
      */
     @DELETE
     @Path("/deleteWeeklySchedule/{startdate}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteWeeklySchedule(@PathParam("wsstartdate") Date startDate) {
+    public void deleteWeeklySchedule(@PathParam("startdate") Date startDate) {
         String startDate2;
         try { 
             startDate2 = URLDecoder.decode(startDate+"", "UTF-8");
@@ -165,5 +207,90 @@ public class ScheduleRESTService {
         }
 
         service.processDeleteWS(startDate);
+    }
+    
+    @GET
+    @Path("/allProgramSlot")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Schedules getAllProgramSlot() {
+        ArrayList<ProgramSlot> pslist = service.findAllPS();
+        Schedules pssList = new Schedules();
+        pssList.setPsList(new ArrayList<ProgramSlot>());
+        
+        for (int i = 0; i < pslist.size(); i++) {
+            pssList.getPsList().add(
+                new ProgramSlot(pslist.get(i).getProgramName(),
+                    pslist.get(i).getDuration(),
+                    pslist.get(i).getDateOfProgram(),
+                    pslist.get(i).getStartTime(),
+                    pslist.get(i).getWeeklyScheduleId(),
+                    pslist.get(i).getPresenter(),
+                    pslist.get(i).getProducer()
+                )
+            );
+        }
+
+        return pssList;
+    }
+    
+      /**
+     * GET method for searching an instance of resource
+     * @param date startDate for the resource
+     */
+    
+    @GET
+    @Path("/getProgramSlotByDate/{dateOfProgram}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ProgramSlot getProgramSlotByDate(@PathParam("dateOfProgram") Date dateOfProgram) {
+        String pgmDate2;
+        try { 
+            pgmDate2 = URLDecoder.decode(dateOfProgram+"", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+            return null;
+        }
+        
+        ProgramSlot pslist = service.findPSByDate(dateOfProgram);
+        return pslist;
+    }
+    /**
+     * PUT method for updating or creating an instance of resource
+     * @param content representation for the resource
+     */
+    @POST
+    @Path("/updateProgramSlot")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateProgramSlot(ProgramSlot ps) {
+        service.processModifyPS(ps);
+    }
+    
+    /**
+     * POST method for creating an instance of resource
+     * @param content representation for the resource
+     */
+    @PUT
+    @Path("/createProgramSlot")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createProgramSlot(ProgramSlot ps) {
+        service.processCreatePS(ps);
+    }
+   
+    /**
+     * DELETE method for deleting an instance of resource
+     * @param name name of the resource
+     */
+    @DELETE
+    @Path("/deleteProgramSlot/{dateOfProgram}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteProgramSlot(@PathParam("dateOfProgram") Date dateOfProgram) {
+        String pgmDate2;
+        try { 
+            pgmDate2 = URLDecoder.decode(dateOfProgram+"", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+            return;
+        }
+
+        service.processDeletePS(dateOfProgram);
     }
 }

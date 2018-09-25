@@ -32,6 +32,26 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 * /create
 * /delete/{id}
 
+## Schedule API
+
+/schedule/allAnnualSchedule
+/schedule/getAnnualScheduleByYear/{year}
+/schedule/createAnnualSchedule
+/schedule/updateAnnualSchedule
+/schedule/deleteAnnualSchedule/{year}
+
+/schedule/allWeeklySchedule
+/schedule/getWeeklyScheduleByDate/{startdate}
+/schedule/createWeeklySchedule
+/schedule/updateWeeklySchedule
+/schedule/deleteWeeklySchedule/{startdate}
+
+/schedule/allProgramSlot
+/schedule/getProgramSlotByDate/{dateOfProgram}
+/schedule/createProgramSlot
+/schedule/updateProgramSlot
+/schedule/deleteProgramSlot/{dateOfProgram}
+
 ## Producer API
 
 * /producer/all
@@ -42,4 +62,3 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 * /presentor/all
 * /presentor/id/{id}
 * /presentor/search?q={prefix}
-

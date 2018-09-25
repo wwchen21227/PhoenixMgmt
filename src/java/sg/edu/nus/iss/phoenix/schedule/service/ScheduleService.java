@@ -10,10 +10,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDao;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDao;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDao;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
@@ -24,6 +26,7 @@ public class ScheduleService {
     	DAOFactoryImpl factory;
 	AnnualScheduleDao asdao;
 	WeeklyScheduleDao wsdao;
+        ProgramSlotDao psdao;
 
 	public ScheduleService() {
 		super();
@@ -31,6 +34,7 @@ public class ScheduleService {
 		factory = new DAOFactoryImpl();
 		asdao = factory.getAnnualScheduleDAO();
 		wsdao = factory.getWeeklyScheduleDAO();
+                psdao = factory.getProgramSlotDAO();
         }
 
         public ArrayList<AnnualSchedule> searchAnnualSchedules(AnnualSchedule asso) {
@@ -147,7 +151,7 @@ public class ScheduleService {
 
 	}
 
-	public WeeklySchedule findWS(Date wsStartDate) {
+	public WeeklySchedule findWSbyDate(Date wsStartDate) {
 		WeeklySchedule currentws = new WeeklySchedule();
 		currentws.setStartDate(wsStartDate);
 		try {
@@ -211,4 +215,92 @@ public class ScheduleService {
             }
 	}
     
+        public ArrayList<ProgramSlot> searchProgramSlot(ProgramSlot psso) {
+		ArrayList<ProgramSlot> list = new ArrayList<ProgramSlot>();
+		try {
+			list = (ArrayList<ProgramSlot>) psdao.searchMatching(psso);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<ProgramSlot> findPSByCriteria(ProgramSlot ps) {
+		ArrayList<ProgramSlot> currentList = new ArrayList<ProgramSlot>();
+
+		try {
+			currentList = (ArrayList<ProgramSlot>) psdao.searchMatching(ps);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return currentList;
+
+	}
+
+	public ProgramSlot findPSByDate(Date psDateOfProgram) {
+            ProgramSlot currentps = new ProgramSlot();
+            currentps.setDateOfProgram(psDateOfProgram);
+            try {
+                    currentps = ((ArrayList<ProgramSlot>) psdao
+                                    .searchMatching(currentps)).get(0);
+                    return currentps;
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            return currentps;
+
+	}
+
+	public ArrayList<ProgramSlot> findAllPS() {
+            ArrayList<ProgramSlot> currentList = new ArrayList<ProgramSlot>();
+            try {
+                    currentList = (ArrayList<ProgramSlot>) psdao.loadAll();
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            return currentList;
+
+	}
+        
+	public void processCreatePS(ProgramSlot ps) {
+            try {
+                    psdao.create(ps);
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+	}
+
+	public void processModifyPS(ProgramSlot ps) {
+		
+            try {
+                   psdao.save(ps);
+            } catch (NotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+		
+	}
+
+	public void processDeletePS(Date psDateOfProgram) {
+
+            try {
+                ProgramSlot ps = new ProgramSlot(psDateOfProgram);
+                psdao.delete(ps);
+            } catch (NotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+	}
 }
