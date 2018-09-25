@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
 
-@Action("addeditws")
-public class AddEditWeeklyScheduleCmd implements Perform {
+@Action("addeditps")
+public class AddEditProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        return "/pages/setupws.jsp";
+        return "/pages/setupps.jsp";
     }
 }

@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
 
 public class ScheduleDelegate {
@@ -64,5 +65,25 @@ public class ScheduleDelegate {
 		service.processDeleteWS(startDate);
         }
                 
+       public ArrayList<ProgramSlot> findAllPS() {
+		ScheduleService service = new ScheduleService();
+		return service.findAllPS();
+		
+	}
+	
+	public void processCreatePS(ProgramSlot ps) {
+		ScheduleService service = new ScheduleService();
+		service.processCreatePS(ps);
+		
+	}
+	public void processModifyPS(ProgramSlot ps) {
+		ScheduleService service = new ScheduleService();
+		service.processModifyPS(ps);
+		
+	}
         
+        public void processDeletePS(Date dateOfProgram) {
+		ScheduleService service = new ScheduleService();
+		service.processDeletePS(dateOfProgram);
+        }
 }

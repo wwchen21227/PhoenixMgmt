@@ -19,7 +19,7 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
  *
  * @author kooc
  */
-@Action("deleteas")
+@Action("deletews")
 public class DeleteWeeklyScheduleCmd implements Perform {
         @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -35,6 +35,6 @@ public class DeleteWeeklyScheduleCmd implements Perform {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return "/pages/crudas.jsp";
+        return "/pages/crudws.jsp";
     }
 }

@@ -12,13 +12,13 @@ import java.util.List;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
 
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
-public interface WeeklyScheduleDao {
+public interface ProgramSlotDao {
     
     /**
 	 * createValueObject-method. This method is used when the Dao class needs to
@@ -27,7 +27,7 @@ public interface WeeklyScheduleDao {
 	 * then this method can be over-rided to return extended valueObject.
      * @return 
 	 */
-	public abstract WeeklySchedule createValueObject();
+	public abstract ProgramSlot createValueObject();
 
 	/**
 	 * getObject-method. This will create and load valueObject contents from
@@ -35,12 +35,12 @@ public interface WeeklyScheduleDao {
 	 * convenience method for the real load-method which accepts the valueObject
 	 * as a parameter. Returned valueObject will be created using the
 	 * createValueObject() method.
-     * @param startDate
+         * @param dateOfProgram;
      * @return 
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException 
      * @throws java.sql.SQLException 
 	 */
-	public abstract WeeklySchedule getObject(Date startDate)
+	public abstract ProgramSlot getObject(Date dateOfProgram)
 			throws NotFoundException, SQLException;
 
 	/**
@@ -58,7 +58,7 @@ public interface WeeklyScheduleDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-	public abstract void load(WeeklySchedule valueObject)
+	public abstract void load(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
 
 	/**
@@ -70,7 +70,7 @@ public interface WeeklyScheduleDao {
      * @return 
      * @throws java.sql.SQLException
 	 */
-	public abstract List<WeeklySchedule> loadAll() throws SQLException;
+	public abstract List<ProgramSlot> loadAll() throws SQLException;
 
 	/**
 	 * create-method. This will create new row in database according to supplied
@@ -86,7 +86,7 @@ public interface WeeklyScheduleDao {
 	 *            must be set for this to work properly.
      * @throws java.sql.SQLException
 	 */
-	public abstract void create(WeeklySchedule valueObject) throws SQLException;
+	public abstract void create(ProgramSlot valueObject) throws SQLException;
 
 	/**
 	 * save-method. This method will save the current state of valueObject to
@@ -102,7 +102,7 @@ public interface WeeklyScheduleDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-	public abstract void save(WeeklySchedule valueObject)
+	public abstract void save(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
 
 	/**
@@ -120,7 +120,7 @@ public interface WeeklyScheduleDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-	public abstract void delete(WeeklySchedule valueObject)
+	public abstract void delete(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
 
 	/**
@@ -167,7 +167,7 @@ public interface WeeklyScheduleDao {
      * @return 
      * @throws java.sql.SQLException 
 	 */
-	public abstract List<WeeklySchedule> searchMatching(WeeklySchedule valueObject)
+	public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)
 			throws SQLException;
     
 }

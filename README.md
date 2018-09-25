@@ -31,3 +31,24 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 * /update
 * /create
 * /delete/{id}
+
+
+## Schedule API
+
+/schedule/allAnnualSchedule
+/schedule/getAnnualScheduleByYear/{year}
+/schedule/createAnnualSchedule
+/schedule/updateAnnualSchedule
+/schedule/deleteAnnualSchedule/{year}
+
+/schedule/allWeeklySchedule
+/schedule/getWeeklyScheduleByDate/{startdate}
+/schedule/createWeeklySchedule
+/schedule/updateWeeklySchedule
+/schedule/deleteWeeklySchedule/{startdate}
+
+/schedule/allProgramSlot
+/schedule/getProgramSlotByDate/{dateOfProgram}
+/schedule/createProgramSlot
+/schedule/updateProgramSlot
+/schedule/deleteProgramSlot/{dateOfProgram}

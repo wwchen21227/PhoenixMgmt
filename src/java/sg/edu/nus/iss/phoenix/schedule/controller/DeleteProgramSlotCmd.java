@@ -17,24 +17,24 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
-@Action("deleteas")
-public class DeleteWeeklyScheduleCmd implements Perform {
+@Action("deleteps")
+public class DeleteProgramSlotCmd implements Perform {
         @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         ScheduleDelegate del = new ScheduleDelegate();
-        String startDate = req.getParameter("startDate");
+        String dateOfProgram = req.getParameter("dateOfProgram");
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
         try{
 
-            java.util.Date date = sdf1.parse(startDate);   
+            java.util.Date date = sdf1.parse(dateOfProgram);   
             java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
-            del.processDeleteWS(sqlStartDate);
+            del.processDeletePS(sqlStartDate);
         
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return "/pages/crudas.jsp";
+        return "/pages/crudps.jsp";
     }
 }

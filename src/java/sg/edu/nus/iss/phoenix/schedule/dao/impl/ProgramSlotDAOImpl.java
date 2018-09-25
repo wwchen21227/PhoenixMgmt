@@ -7,7 +7,7 @@ package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
 /**
  *
- * @author kooc
+ * @author aswathyl
  */
 
 import java.sql.Connection;
@@ -16,62 +16,63 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
-import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDao;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDao;
 /**
- * WeeklySchedule Data Access Object (DAO). This class contains all database
- * handling that is needed to permanently store and retrieve WeeklySchedule object
+ * ProgramSlotDao Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve ProgramSlot object
  * instances.
  */
-public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
+public class ProgramSlotDAOImpl implements ProgramSlotDao {
     
     Connection connection;
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#createValueObject()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#createValueObject()
 	 */
 	@Override
-	public WeeklySchedule createValueObject() {
-		return new WeeklySchedule();
+	public ProgramSlot createValueObject() {
+		return new ProgramSlot();
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#getObject(java.lang.String)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#getObject(java.lang.String)
 	 */
 	@Override
-	public WeeklySchedule getObject(Date startDate) throws NotFoundException,
+	public ProgramSlot getObject(Date dateOfProgram) throws NotFoundException,
 			SQLException {
 
-		WeeklySchedule valueObject = createValueObject();
-		valueObject.setStartDate(startDate);
+		ProgramSlot valueObject = createValueObject();
+                valueObject.setDateOfProgram(dateOfProgram);
+                
 		load(valueObject);
 		return valueObject;
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#load(sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#load(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void load(WeeklySchedule valueObject) throws NotFoundException,
+	public void load(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getStartDate()== null) {
+		if (valueObject.getDateOfProgram()== null ) {
 			// System.out.println("Can not select without Primary-Key!");
 			throw new NotFoundException("Can not select without Primary-Key!");
 		}
 
-		String sql = "SELECT * FROM `weekly-schedule` WHERE (`startDate` = ? ); ";
+		String sql = "SELECT * FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, valueObject.getStartDate());
-
+			stmt.setDate(1, valueObject.getDateOfProgram());
 			singleQuery(stmt, valueObject);
 
 		} finally {
@@ -82,13 +83,13 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#loadAll()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#loadAll()
 	 */
 	@Override
-	public List<WeeklySchedule> loadAll() throws SQLException {
+	public List<ProgramSlot> loadAll() throws SQLException {
 		openConnection();
-		String sql = "SELECT * FROM `weekly-schedule` ORDER BY `startDate` ASC; ";
-		List<WeeklySchedule> searchResults = listQuery(connection
+		String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` ASC; ";
+		List<ProgramSlot> searchResults = listQuery(connection
 				.prepareStatement(sql));
 		closeConnection();
 		System.out.println("record size"+searchResults.size());
@@ -96,21 +97,28 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#create(sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#create(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public synchronized void create(WeeklySchedule valueObject)
+	public synchronized void create(ProgramSlot valueObject)
 			throws SQLException {
 
 		String sql = "";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `weekly-schedule` (`startDate`, `assignedBy`) VALUES (?,?); ";
+			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`,`startTime`,"
+                                + "`program-name`,`WeeklyScheduleId`,`Producer`,`Presenter`) VALUES (?,?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, valueObject.getStartDate());
-			stmt.setString(2, valueObject.getAssignedBy());
+                        stmt.setTime(1, valueObject.getDuration());
+                        stmt.setDate(2, valueObject.getDateOfProgram());
+			stmt.setDate(3, valueObject.getStartTime());
+			stmt.setString(4, valueObject.getProgramName());
+                        stmt.setInt(5, valueObject.getWeeklyScheduleId());
+                        stmt.setString(6, valueObject.getProducer());
+                        stmt.setString(7, valueObject.getPresenter());
 			int rowcount = databaseUpdate(stmt);
+                        
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
 				throw new SQLException("PrimaryKey Error when updating DB!");
@@ -125,20 +133,22 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#save(sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#save(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void save(WeeklySchedule valueObject) throws NotFoundException,
+	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `weekly-schedule` SET `assingedBY` = ? WHERE (`startDate` = ? ); ";
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `startTime` = ?,"
+                        + "`Producer` = ?, `Presenter` = ? WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getAssignedBy());
-
-			stmt.setDate(2, valueObject.getStartDate());
+			stmt.setTime(1, valueObject.getDuration());
+                        stmt.setDate(2, valueObject.getStartTime());
+			stmt.setString(3, valueObject.getProducer());
+                        stmt.setString(4, valueObject.getPresenter());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -159,23 +169,23 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#delete(sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#delete(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public void delete(WeeklySchedule valueObject) throws NotFoundException,
+	public void delete(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getStartDate() == null) {
+		if (valueObject.getDateOfProgram() == null) {
 			// System.out.println("Can not delete without Primary-Key!");
 			throw new NotFoundException("Can not delete without Primary-Key!");
 		}
 
-		String sql = "DELETE FROM `weekly-schedule` WHERE (`startDate` = ? ); ";
+		String sql = "DELETE FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, valueObject.getStartDate());
+			stmt.setDate(1, valueObject.getDateOfProgram());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -196,12 +206,12 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#deleteAll(java.sql.Connection)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#deleteAll(java.sql.Connection)
 	 */
 	@Override
 	public void deleteAll(Connection conn) throws SQLException {
 
-		String sql = "DELETE FROM `radio-program`";
+		String sql = "DELETE FROM `program-slot`";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
@@ -217,12 +227,12 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#countAll()
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#countAll()
 	 */
 	@Override
 	public int countAll() throws SQLException {
 
-		String sql = "SELECT count(*) FROM `weekly-schedule`";
+		String sql = "SELECT count(*) FROM `program-slot`";
 		PreparedStatement stmt = null;
 		ResultSet result = null;
 		int allRows = 0;
@@ -244,35 +254,75 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.WeeklyScheduleDao#searchMatching(sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule)
+	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#searchMatching(sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot)
 	 */
 	@Override
-	public List<WeeklySchedule> searchMatching(WeeklySchedule valueObject) throws SQLException {
+	public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
 
                 @SuppressWarnings("UnusedAssignment")
-		List<WeeklySchedule> searchResults = new ArrayList<>();
+		List<ProgramSlot> searchResults = new ArrayList<>();
 		openConnection();
 		boolean first = true;
 		StringBuilder sql = new StringBuilder(
-				"SELECT * FROM `weekly-schedule` WHERE 1=1 ");
+				"SELECT * FROM `program-slot` WHERE 1=1 ");
 
-		if (valueObject.getStartDate() != null) {
+		if (valueObject.getProgramName() != null) {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `name` LIKE '").append(valueObject.getStartDate())
+			sql.append("AND `program-name` LIKE '").append(valueObject.getProgramName())
 					.append("%' ");
 		}
 
-		if (valueObject.getAssignedBy()!= null) {
+		if (valueObject.getDuration()!= null) {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `desc` LIKE '").append(valueObject.getAssignedBy())
+			sql.append("AND `duration` LIKE '").append(valueObject.getDuration())
+					.append("%' ");
+		}
+                
+                if (valueObject.getDateOfProgram()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `dateOfProgram` LIKE '").append(valueObject.getDateOfProgram())
+					.append("%' ");
+		}
+                
+                if (valueObject.getStartTime()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `startTime` LIKE '").append(valueObject.getStartTime())
+					.append("%' ");
+		}
+                
+                if (valueObject.getWeeklyScheduleId()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `weeklyScheduleId` LIKE '").append(valueObject.getWeeklyScheduleId())
+					.append("%' ");
+		}
+                
+                if (valueObject.getPresenter()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `presenter` LIKE '").append(valueObject.getPresenter())
+					.append("%' ");
+		}
+                
+                if (valueObject.getProducer()!= null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `producer` LIKE '").append(valueObject.getProducer())
 					.append("%' ");
 		}
 
-		sql.append("ORDER BY `startDate` ASC ");
+		sql.append("ORDER BY `dateOfProgram` ASC ");
 
 		// Prevent accidential full table results.
 		// Use loadAll if all rows must be returned.
@@ -317,7 +367,7 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-	protected void singleQuery(PreparedStatement stmt, WeeklySchedule valueObject)
+	protected void singleQuery(PreparedStatement stmt, ProgramSlot valueObject)
 			throws NotFoundException, SQLException {
 
 		ResultSet result = null;
@@ -326,13 +376,18 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 			result = stmt.executeQuery();
 
 			if (result.next()) {
+                                valueObject.setDuration(result.getTime("duration"));
+                                valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
+                                valueObject.setStartTime(result.getDate("startTime"));
+                                valueObject.setProgramName(result.getString("program-name"));
+                                valueObject.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
+                                valueObject.setProducer(result.getString("producer"));
+                                valueObject.setPresenter(result.getString("presenter"));
 
-				valueObject.setStartDate(result.getDate("startDate"));
-				valueObject.setAssignedBy(result.getString("assignedBy"));
 
 			} else {
-				// System.out.println("WeeklySchedule Object Not Found!");
-				throw new NotFoundException("WeeklySchedule Object Not Found!");
+				// System.out.println("ProgramSlot Object Not Found!");
+				throw new NotFoundException("ProgramSlot Object Not Found!");
 			}
 		} finally {
 			if (result != null)
@@ -354,20 +409,25 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
      * @return 
      * @throws java.sql.SQLException
 	 */
-	protected List<WeeklySchedule> listQuery(PreparedStatement stmt) throws SQLException {
+	protected List<ProgramSlot> listQuery(PreparedStatement stmt) throws SQLException {
 
-		ArrayList<WeeklySchedule> searchResults = new ArrayList<>();
+		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
 		ResultSet result = null;
 		openConnection();
 		try {
 			result = stmt.executeQuery();
 
 			while (result.next()) {
-				WeeklySchedule temp = createValueObject();
+				ProgramSlot temp = createValueObject();
 
-				temp.setStartDate(result.getDate("startDate"));
-				temp.setAssignedBy(result.getString("assignedBy"));
-
+                                temp.setDuration(result.getTime("duration"));
+                                temp.setDateOfProgram(result.getDate("dateOfProgram"));
+                                temp.setStartTime(result.getDate("startTime"));
+                                temp.setProgramName(result.getString("program-name"));
+                                temp.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
+                                temp.setProducer(result.getString("producer"));
+                                temp.setPresenter(result.getString("presenter"));
+                                
 				searchResults.add(temp);
 			}
 
@@ -379,7 +439,7 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 			closeConnection();
 		}
 
-		return (List<WeeklySchedule>) searchResults;
+		return (List<ProgramSlot>) searchResults;
 	}
 
 	private void openConnection() {

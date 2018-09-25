@@ -260,7 +260,7 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `name` LIKE '").append(valueObject.getStartDate())
+			sql.append("AND `startDate` LIKE '").append(valueObject.getStartDate())
 					.append("%' ");
 		}
 
@@ -268,7 +268,7 @@ public class WeeklyScheduleDAOImpl implements WeeklyScheduleDao {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `desc` LIKE '").append(valueObject.getAssignedBy())
+			sql.append("AND `assignedBy` LIKE '").append(valueObject.getAssignedBy())
 					.append("%' ");
 		}
 

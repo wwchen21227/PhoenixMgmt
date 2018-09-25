@@ -259,7 +259,7 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `name` LIKE '").append(valueObject.getYear())
+			sql.append("AND `year` LIKE '").append(valueObject.getYear())
 					.append("%' ");
 		}
 
@@ -267,7 +267,7 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDao {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND `desc` LIKE '").append(valueObject.getAssignedBy())
+			sql.append("AND `assignedBy` LIKE '").append(valueObject.getAssignedBy())
 					.append("%' ");
 		}
 
