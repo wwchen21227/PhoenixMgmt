@@ -149,8 +149,8 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
                         stmt.setDate(2, valueObject.getDateOfProgram());
                         stmt.setTime(3, valueObject.getStartTime());
                         stmt.setString(4, valueObject.getProgramName());
-			stmt.setString(3, valueObject.getProducer());
-                        stmt.setString(4, valueObject.getPresenter());
+			stmt.setString(5, valueObject.getProducer());
+                        stmt.setString(6, valueObject.getPresenter());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {

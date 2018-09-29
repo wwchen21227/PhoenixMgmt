@@ -273,7 +273,6 @@ public class ScheduleRESTService {
     @Path("/createProgramSlot")
     @Consumes(MediaType.APPLICATION_JSON)
     public void createProgramSlot(ProgramSlot ps) {
-        System.out.println("here");
         service.processCreatePS(ps);
     }
    
