@@ -78,6 +78,16 @@ public class User implements Cloneable, Serializable {
 		return roles;
 	}
 
+        public String getRolesStr() {
+            String roleStr = "";
+            int size = roles.size();
+            for (int i =0; i < size; i++)
+            {
+                roleStr += roles.get(i).getRole() + ((i != (size - 1)) ? ":" : "");
+            }
+            return roleStr;
+	}
+        
 	public void setRoles(ArrayList<Role> roles) {
 		this.roles = roles;
 	}
