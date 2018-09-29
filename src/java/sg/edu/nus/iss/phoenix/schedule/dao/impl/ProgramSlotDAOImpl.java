@@ -151,6 +151,7 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
                         stmt.setString(4, valueObject.getProgramName());
 			stmt.setString(5, valueObject.getProducer());
                         stmt.setString(6, valueObject.getPresenter());
+                        stmt.setString(7, valueObject.getProgramSlotId());                        
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -307,14 +308,6 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 					.append("%' ");
 		}
                 
-                if (valueObject.getWeeklyScheduleId()!= null) {
-			if (first) {
-				first = false;
-			}
-			sql.append("AND `weeklyScheduleId` LIKE '").append(valueObject.getWeeklyScheduleId())
-					.append("%' ");
-		}
-                
                 if (valueObject.getPresenter()!= null) {
 			if (first) {
 				first = false;
@@ -390,7 +383,6 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
                                 valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
                                 valueObject.setStartTime(result.getTime("startTime"));
                                 valueObject.setProgramName(result.getString("program-name"));
-                                valueObject.setweeklyScheduleId(result.getString("weeklyScheduleId"));
                                 valueObject.setProducer(result.getString("producer"));
                                 valueObject.setPresenter(result.getString("presenter"));
 
@@ -435,7 +427,6 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
                                 temp.setDateOfProgram(result.getDate("dateOfProgram"));
                                 temp.setStartTime(result.getTime("startTime"));
                                 temp.setProgramName(result.getString("program-name"));
-                                temp.setweeklyScheduleId(result.getString("weeklyScheduleId"));
                                 temp.setProducer(result.getString("producer"));
                                 temp.setPresenter(result.getString("presenter"));
                                 
