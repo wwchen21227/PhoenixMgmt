@@ -34,23 +34,23 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 
 ## Schedule API
 
-/schedule/allAnnualSchedule
-/schedule/getAnnualScheduleByYear/{year}
-/schedule/createAnnualSchedule
-/schedule/updateAnnualSchedule
-/schedule/deleteAnnualSchedule/{year}
+* /schedule/allAnnualSchedule
+* /schedule/getAnnualScheduleByYear/{year}
+* /schedule/createAnnualSchedule
+* /schedule/updateAnnualSchedule
+* /schedule/deleteAnnualSchedule/{year}
 
-/schedule/allWeeklySchedule
-/schedule/getWeeklyScheduleByDate/{startdate}
-/schedule/createWeeklySchedule
-/schedule/updateWeeklySchedule
-/schedule/deleteWeeklySchedule/{startdate}
+* /schedule/allWeeklySchedule
+* /schedule/getWeeklyScheduleByDate/{startdate}
+* /schedule/createWeeklySchedule
+* /schedule/updateWeeklySchedule
+* /schedule/deleteWeeklySchedule/{startdate}
 
-/schedule/allProgramSlot
-/schedule/getProgramSlotByDate/{dateOfProgram}
-/schedule/createProgramSlot
-/schedule/updateProgramSlot
-/schedule/deleteProgramSlot/{dateOfProgram}
+* /schedule/allProgramSlot
+* /schedule/getProgramSlotByDate/{dateOfProgram}
+* /schedule/createProgramSlot
+* /schedule/updateProgramSlot
+* /schedule/deleteProgramSlot/{programSlotId}
 
 ## Producer API
 
@@ -62,3 +62,4 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 * /presentor/all
 * /presentor/id/{id}
 * /presentor/search?q={prefix}
+

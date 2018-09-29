@@ -40,7 +40,7 @@ public interface ProgramSlotDao {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException 
      * @throws java.sql.SQLException 
 	 */
-	public abstract ProgramSlot getObject(Date dateOfProgram)
+	public abstract ProgramSlot getObject(String id)
 			throws NotFoundException, SQLException;
 
 	/**
