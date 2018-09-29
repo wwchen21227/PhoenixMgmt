@@ -112,7 +112,7 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param year of the resource
      */
     @DELETE
     @Path("/deleteAnnualSchedule/{year}")
@@ -148,7 +148,7 @@ public class ScheduleRESTService {
     
      /**
      * GET method for searching an instance of resource
-     * @param date startDate for the resource
+     * @param startDate for the resource
      */
     
     @GET
@@ -170,7 +170,7 @@ public class ScheduleRESTService {
     
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ws representation for the resource
      */
     @POST
     @Path("/updateWeeklySchedule")
@@ -181,7 +181,7 @@ public class ScheduleRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ws representation for the resource
      */
     @PUT
     @Path("/createWeeklySchedule")
@@ -192,7 +192,7 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param startdate startdate of the resource
+     * @param startDate of the resource
      */
     @DELETE
     @Path("/deleteWeeklySchedule/{startdate}")
@@ -236,7 +236,7 @@ public class ScheduleRESTService {
     
       /**
      * GET method for searching an instance of resource
-     * @param date startDate for the resource
+     * @param dateOfProgram for the resource
      */
     
     @GET
@@ -256,7 +256,7 @@ public class ScheduleRESTService {
     }
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ps representation for the resource
      */
     @POST
     @Path("/updateProgramSlot")
@@ -267,7 +267,7 @@ public class ScheduleRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ps representation for the resource
      */
     @PUT
     @Path("/createProgramSlot")
@@ -278,7 +278,7 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param dateOfProgram of the resource
      */
     @DELETE
     @Path("/deleteProgramSlot/{programSlotId}")

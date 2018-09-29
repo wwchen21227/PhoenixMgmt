@@ -77,7 +77,7 @@ public class UserRESTService {
     
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param user representation for the resource
      */
     @POST
     @Path("/update")
@@ -88,7 +88,7 @@ public class UserRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param user representation for the resource
      */
     @PUT
     @Path("/create")
@@ -99,7 +99,7 @@ public class UserRESTService {
     
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param id of the resource
      */
     @DELETE
     @Path("/delete/{id}")
