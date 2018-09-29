@@ -290,10 +290,10 @@ public class ScheduleService {
 		
 	}
 
-	public void processDeletePS(Date psDateOfProgram) {
+	public void processDeletePS(String programSlotId) {
 
             try {
-                ProgramSlot ps = new ProgramSlot(psDateOfProgram);
+                ProgramSlot ps = new ProgramSlot(programSlotId);
                 psdao.delete(ps);
             } catch (NotFoundException e) {
                 // TODO Auto-generated catch block

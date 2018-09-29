@@ -89,7 +89,7 @@ public class ScheduleRESTService {
     }
     
     /**
-     * PUT method for updating or creating an instance of resource
+     * POST method for updating or creating an instance of resource
      * @param content representation for the resource
      */
     @POST
@@ -100,7 +100,7 @@ public class ScheduleRESTService {
     }
     
     /**
-     * POST method for creating an instance of resource
+     * PUT method for creating an instance of resource
      * @param content representation for the resource
      */
     @PUT
@@ -112,7 +112,7 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param year of the resource
      */
     @DELETE
     @Path("/deleteAnnualSchedule/{year}")
@@ -148,7 +148,7 @@ public class ScheduleRESTService {
     
      /**
      * GET method for searching an instance of resource
-     * @param date startDate for the resource
+     * @param startDate for the resource
      */
     
     @GET
@@ -170,7 +170,7 @@ public class ScheduleRESTService {
     
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ws representation for the resource
      */
     @POST
     @Path("/updateWeeklySchedule")
@@ -181,7 +181,7 @@ public class ScheduleRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ws representation for the resource
      */
     @PUT
     @Path("/createWeeklySchedule")
@@ -192,7 +192,7 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param startdate startdate of the resource
+     * @param startDate of the resource
      */
     @DELETE
     @Path("/deleteWeeklySchedule/{startdate}")
@@ -219,7 +219,8 @@ public class ScheduleRESTService {
         
         for (int i = 0; i < pslist.size(); i++) {
             pssList.getPsList().add(
-                new ProgramSlot(pslist.get(i).getProgramName(),
+                new ProgramSlot(pslist.get(i).getProgramSlotId(),
+                    pslist.get(i).getProgramName(),
                     pslist.get(i).getDuration(),
                     pslist.get(i).getDateOfProgram(),
                     pslist.get(i).getStartTime(),
@@ -235,16 +236,16 @@ public class ScheduleRESTService {
     
       /**
      * GET method for searching an instance of resource
-     * @param date startDate for the resource
+     * @param dateOfProgram for the resource
      */
     
     @GET
     @Path("/getProgramSlotByDate/{dateOfProgram}")
     @Produces(MediaType.APPLICATION_JSON)
     public ProgramSlot getProgramSlotByDate(@PathParam("dateOfProgram") Date dateOfProgram) {
-        String pgmDate2;
+        String pgmid2;
         try { 
-            pgmDate2 = URLDecoder.decode(dateOfProgram+"", "UTF-8");
+            pgmid2 = URLDecoder.decode(dateOfProgram+"", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace(); 
             return null;
@@ -255,7 +256,7 @@ public class ScheduleRESTService {
     }
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ps representation for the resource
      */
     @POST
     @Path("/updateProgramSlot")
@@ -266,7 +267,7 @@ public class ScheduleRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ps representation for the resource
      */
     @PUT
     @Path("/createProgramSlot")
@@ -277,20 +278,20 @@ public class ScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param dateOfProgram of the resource
      */
     @DELETE
-    @Path("/deleteProgramSlot/{dateOfProgram}")
+    @Path("/deleteProgramSlot/{programSlotId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteProgramSlot(@PathParam("dateOfProgram") Date dateOfProgram) {
-        String pgmDate2;
+    public void deleteProgramSlot(@PathParam("programSlotId") String programSlotId) {
+        String pgmid2;
         try { 
-            pgmDate2 = URLDecoder.decode(dateOfProgram+"", "UTF-8");
+            pgmid2 = URLDecoder.decode(programSlotId+"", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace(); 
             return;
         }
 
-        service.processDeletePS(dateOfProgram);
+        service.processDeletePS(programSlotId);
     }
 }
