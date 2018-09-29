@@ -72,6 +72,7 @@ public class ScheduleDelegate {
 	}
 	
 	public void processCreatePS(ProgramSlot ps) {
+            System.out.println("here");
 		ScheduleService service = new ScheduleService();
 		service.processCreatePS(ps);
 		
@@ -82,8 +83,8 @@ public class ScheduleDelegate {
 		
 	}
         
-        public void processDeletePS(Date dateOfProgram) {
+        public void processDeletePS(String programSlotId) {
 		ScheduleService service = new ScheduleService();
-		service.processDeletePS(dateOfProgram);
+		service.processDeletePS(programSlotId);
         }
 }

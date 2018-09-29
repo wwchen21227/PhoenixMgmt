@@ -51,4 +51,4 @@ http://localhost:8080/phoenix/rest/user/{rest action below}
 /schedule/getProgramSlotByDate/{dateOfProgram}
 /schedule/createProgramSlot
 /schedule/updateProgramSlot
-/schedule/deleteProgramSlot/{dateOfProgram}
+/schedule/deleteProgramSlot/{programSlotId}
