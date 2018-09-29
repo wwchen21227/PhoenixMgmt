@@ -10,6 +10,8 @@ import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDao;
 import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDao;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDao;
+import sg.edu.nus.iss.phoenix.authenticate.dao.PresentorDao;
+import sg.edu.nus.iss.phoenix.authenticate.dao.ProducerDao;
 
 /**
  *
@@ -23,10 +25,14 @@ public interface DAOFactory {
 
 	UserDao getUserDAO();
         
-        AnnualScheduleDao getAnnualScheduleDAO();
+  AnnualScheduleDao getAnnualScheduleDAO();
         
-        WeeklyScheduleDao getWeeklyScheduleDAO();
+  WeeklyScheduleDao getWeeklyScheduleDAO();
         
-        ProgramSlotDao getProgramSlotDAO();
+  ProgramSlotDao getProgramSlotDAO();
+  
+  ProducerDao getProducerDao();
+        
+  PresentorDao getPresenterDao();
 	
 }
