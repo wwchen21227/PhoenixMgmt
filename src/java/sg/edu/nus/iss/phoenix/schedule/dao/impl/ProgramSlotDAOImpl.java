@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -469,5 +470,33 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+        
+        @Override
+	public boolean checkOverLap(String newTime) throws SQLException {
+		String sql = "select count(*) from phoenix.`program-slot` "
+                        + " where ADDTIME(`dateOfProgram`,`startTime`) <=TIMESTAMP(?) " 
+                        +" and ADDTIME(ADDTIME(`dateOfProgram`,`startTime`), `duration` ) >=TIMESTAMP(?)";
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+		boolean isOverLap = false;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, newTime);
+			result = stmt.executeQuery();
+
+			if (result.next())
+				isOverLap = result.getInt(1)>0;
+		} 
+                finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+		return isOverLap;
+         
 	}
 }

@@ -24,6 +24,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 import java.sql.Date;
+import javax.ws.rs.QueryParam;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
@@ -294,4 +295,17 @@ public class ScheduleRESTService {
 
         service.processDeletePS(programSlotId);
     }
+    
+     /**
+     * Check NewTime method for create new programSlot
+     * @param newTime of the resource
+     */
+    @GET 
+    @Path("/checkNewTimeOverLap")
+    @Produces(MediaType.APPLICATION_JSON) 
+    public boolean checkNewTimeOverLap(@QueryParam("newTime") String newTime){
+        boolean isOverLap = service.checkOverLap("2019-09-23 09:50:00");
+        return isOverLap;		
+    }
+    
 }

@@ -170,4 +170,5 @@ public interface ProgramSlotDao {
 	public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)
 			throws SQLException;
     
+        public abstract  boolean checkOverLap(String newTime) throws SQLException;
 }
