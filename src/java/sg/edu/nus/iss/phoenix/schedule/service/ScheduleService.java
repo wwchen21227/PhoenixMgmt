@@ -303,4 +303,15 @@ public class ScheduleService {
                 e.printStackTrace();
             }
 	}
+        
+        public boolean checkOverLap(String newTime) {
+            boolean isOverlap=false;
+            try {
+                  isOverlap=  psdao.checkOverLap(newTime);
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            return isOverlap;
+	}
 }
