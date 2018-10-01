@@ -27,6 +27,10 @@ public class PresentorService {
         presentorDao = factory.getPresenterDao();
     }
     
+    public PresentorService(PresentorDao dao){
+        this.presentorDao = dao;
+    }
+    
     public User getPresentor(String id) throws NotFoundException, SQLException{
         return presentorDao.selectPresentor(id);
     }
