@@ -35,12 +35,12 @@ public interface ProgramSlotDao {
 	 * convenience method for the real load-method which accepts the valueObject
 	 * as a parameter. Returned valueObject will be created using the
 	 * createValueObject() method.
-         * @param dateOfProgram;
+         * @param id;
      * @return 
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException 
      * @throws java.sql.SQLException 
 	 */
-	public abstract ProgramSlot getObject(Date dateOfProgram)
+	public abstract ProgramSlot getObject(String id)
 			throws NotFoundException, SQLException;
 
 	/**
@@ -170,4 +170,5 @@ public interface ProgramSlotDao {
 	public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)
 			throws SQLException;
     
+        public abstract  boolean checkOverLap(String newTime) throws SQLException;
 }

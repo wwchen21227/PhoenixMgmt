@@ -123,7 +123,7 @@ public class UserDaoImpl implements UserDao {
 			stmt.setString(1, valueObject.getId());
 			stmt.setString(2, valueObject.getPassword());
 			stmt.setString(3, valueObject.getName());
-			stmt.setString(4, valueObject.getRoles().get(0).getRole());
+			stmt.setString(4, valueObject.getRolesStr());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
@@ -148,16 +148,16 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void save(User valueObject) throws NotFoundException, SQLException {
 
-		String sql = "UPDATE user SET password = ?, name = ?, role = ? WHERE (id = ? ) ";
+		String sql = "UPDATE user SET name = ?, role = ? WHERE (id = ? ) ";
 		PreparedStatement stmt = null;
 
 		try {
 			stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getPassword());
-			stmt.setString(2, valueObject.getName());
-			stmt.setString(3, valueObject.getRoles().get(0).getRole());
+			//stmt.setString(1, valueObject.getPassword());
+			stmt.setString(1, valueObject.getName());
+			stmt.setString(2, valueObject.getRolesStr());
 
-			stmt.setString(4, valueObject.getId());
+			stmt.setString(3, valueObject.getId());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {

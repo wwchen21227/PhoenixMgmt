@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +46,11 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 	 * @see sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDao#getObject(java.lang.String)
 	 */
 	@Override
-	public ProgramSlot getObject(Date dateOfProgram) throws NotFoundException,
+	public ProgramSlot getObject(String id) throws NotFoundException,
 			SQLException {
 
 		ProgramSlot valueObject = createValueObject();
-                valueObject.setDateOfProgram(dateOfProgram);
+                valueObject.setProgramSlotId(id);
                 
 		load(valueObject);
 		return valueObject;
@@ -62,17 +63,17 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 	public void load(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getDateOfProgram()== null ) {
+		if (valueObject.getProgramSlotId()== null ) {
 			// System.out.println("Can not select without Primary-Key!");
 			throw new NotFoundException("Can not select without Primary-Key!");
 		}
 
-		String sql = "SELECT * FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
+		String sql = "SELECT * FROM `program-slot` WHERE (`programSlotId` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, valueObject.getDateOfProgram());
+			stmt.setString(1, valueObject.getProgramSlotId());
 			singleQuery(stmt, valueObject);
 
 		} finally {
@@ -107,14 +108,14 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`,`startTime`,"
-                                + "`program-name`,`WeeklyScheduleId`,`Producer`,`Presenter`) VALUES (?,?,?,?,?,?,?); ";
+			sql = "INSERT INTO `program-slot` (`programSlotId`, `duration`, `dateOfProgram`,`startTime`,`program-name`,`Producer`,`Presenter`) VALUES (?,?,?,?,?,?,?); ";
+
 			stmt = connection.prepareStatement(sql);
-                        stmt.setTime(1, valueObject.getDuration());
-                        stmt.setDate(2, valueObject.getDateOfProgram());
-			stmt.setDate(3, valueObject.getStartTime());
-			stmt.setString(4, valueObject.getProgramName());
-                        stmt.setInt(5, valueObject.getWeeklyScheduleId());
+                        stmt.setString(1, valueObject.getProgramSlotId());
+                        stmt.setTime(2, valueObject.getDuration());
+                        stmt.setDate(3, valueObject.getDateOfProgram());
+			stmt.setTime(4, valueObject.getStartTime());
+			stmt.setString(5, valueObject.getProgramName());
                         stmt.setString(6, valueObject.getProducer());
                         stmt.setString(7, valueObject.getPresenter());
 			int rowcount = databaseUpdate(stmt);
@@ -139,16 +140,19 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `program-slot` SET `duration` = ?, `startTime` = ?,"
-                        + "`Producer` = ?, `Presenter` = ? WHERE (`dateOfProgram` = ? ); ";
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateOfProgram` = ?, `startTime` = ?, `program-name` = ?,"
+                        + "`Producer` = ?, `Presenter` = ?  WHERE (`programSlotId` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setTime(1, valueObject.getDuration());
-                        stmt.setDate(2, valueObject.getStartTime());
-			stmt.setString(3, valueObject.getProducer());
-                        stmt.setString(4, valueObject.getPresenter());
+                        stmt.setDate(2, valueObject.getDateOfProgram());
+                        stmt.setTime(3, valueObject.getStartTime());
+                        stmt.setString(4, valueObject.getProgramName());
+			stmt.setString(5, valueObject.getProducer());
+                        stmt.setString(6, valueObject.getPresenter());
+                        stmt.setString(7, valueObject.getProgramSlotId());                        
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -175,17 +179,17 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 	public void delete(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getDateOfProgram() == null) {
+		if (valueObject.getProgramSlotId() == null) {
 			// System.out.println("Can not delete without Primary-Key!");
 			throw new NotFoundException("Can not delete without Primary-Key!");
 		}
 
-		String sql = "DELETE FROM `program-slot` WHERE (`dateOfProgram` = ? ); ";
+		String sql = "DELETE FROM `program-slot` WHERE (`programSlotId` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, valueObject.getDateOfProgram());
+			stmt.setString(1, valueObject.getProgramSlotId());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -266,6 +270,13 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 		StringBuilder sql = new StringBuilder(
 				"SELECT * FROM `program-slot` WHERE 1=1 ");
 
+                if (valueObject.getProgramSlotId() != null) {
+			if (first) {
+				first = false;
+			}
+			sql.append("AND `programSlotId` LIKE '").append(valueObject.getProgramSlotId())
+					.append("%' ");
+		}
 		if (valueObject.getProgramName() != null) {
 			if (first) {
 				first = false;
@@ -295,14 +306,6 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 				first = false;
 			}
 			sql.append("AND `startTime` LIKE '").append(valueObject.getStartTime())
-					.append("%' ");
-		}
-                
-                if (valueObject.getWeeklyScheduleId()!= null) {
-			if (first) {
-				first = false;
-			}
-			sql.append("AND `weeklyScheduleId` LIKE '").append(valueObject.getWeeklyScheduleId())
 					.append("%' ");
 		}
                 
@@ -376,11 +379,11 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			result = stmt.executeQuery();
 
 			if (result.next()) {
+                                valueObject.setProgramSlotId(result.getString("programSlotId"));
                                 valueObject.setDuration(result.getTime("duration"));
                                 valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
-                                valueObject.setStartTime(result.getDate("startTime"));
+                                valueObject.setStartTime(result.getTime("startTime"));
                                 valueObject.setProgramName(result.getString("program-name"));
-                                valueObject.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
                                 valueObject.setProducer(result.getString("producer"));
                                 valueObject.setPresenter(result.getString("presenter"));
 
@@ -420,11 +423,11 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			while (result.next()) {
 				ProgramSlot temp = createValueObject();
 
+                                temp.setProgramSlotId(result.getString("programSlotId"));
                                 temp.setDuration(result.getTime("duration"));
                                 temp.setDateOfProgram(result.getDate("dateOfProgram"));
-                                temp.setStartTime(result.getDate("startTime"));
+                                temp.setStartTime(result.getTime("startTime"));
                                 temp.setProgramName(result.getString("program-name"));
-                                temp.setweeklyScheduleId(result.getInt("weeklyScheduleId"));
                                 temp.setProducer(result.getString("producer"));
                                 temp.setPresenter(result.getString("presenter"));
                                 
@@ -467,5 +470,33 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+        
+        @Override
+	public boolean checkOverLap(String newTime) throws SQLException {
+		String sql = "select count(*) from phoenix.`program-slot` "
+                        + " where ADDTIME(`dateOfProgram`,`startTime`) <=TIMESTAMP(?) " 
+                        +" and ADDTIME(ADDTIME(`dateOfProgram`,`startTime`), `duration` ) >=TIMESTAMP(?)";
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+		boolean isOverLap = false;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, newTime);
+			result = stmt.executeQuery();
+
+			if (result.next())
+				isOverLap = result.getInt(1)>0;
+		} 
+                finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+		return isOverLap;
+         
 	}
 }

@@ -290,10 +290,10 @@ public class ScheduleService {
 		
 	}
 
-	public void processDeletePS(Date psDateOfProgram) {
+	public void processDeletePS(String programSlotId) {
 
             try {
-                ProgramSlot ps = new ProgramSlot(psDateOfProgram);
+                ProgramSlot ps = new ProgramSlot(programSlotId);
                 psdao.delete(ps);
             } catch (NotFoundException e) {
                 // TODO Auto-generated catch block
@@ -302,5 +302,16 @@ public class ScheduleService {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+	}
+        
+        public boolean checkOverLap(String newTime) {
+            boolean isOverlap=false;
+            try {
+                  isOverlap=  psdao.checkOverLap(newTime);
+            } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            return isOverlap;
 	}
 }

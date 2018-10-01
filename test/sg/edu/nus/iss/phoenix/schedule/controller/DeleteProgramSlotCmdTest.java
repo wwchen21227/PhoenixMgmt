@@ -60,13 +60,8 @@ public class DeleteProgramSlotCmdTest {
         this.session = mock(HttpSession.class);
         this.delegate = mock(ScheduleDelegate.class);
         this.cmd = mock(DeleteProgramSlotCmd.class);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
-        java.util.Date date = sdf1.parse("28-08-2018");   
-        java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
-        
-        when(this.req.getParameter("dateOfProgram")).thenReturn("28-08-2018");
+        when(this.req.getParameter("programSlotId")).thenReturn("someid");
         when(this.cmd.getDelegate()).thenReturn(this.delegate);
-        Mockito.doNothing().when(this.delegate).processDeletePS(sqlStartDate);
         when(this.cmd.perform("", this.req, null)).thenReturn("Somepage");
     }
     

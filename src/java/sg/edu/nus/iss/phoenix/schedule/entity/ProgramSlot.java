@@ -10,7 +10,7 @@ import java.sql.Time;
  */
 public class ProgramSlot implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5500218812568593553L;
    
     /** 
      * Persistent Instance variables. This data is directly 
@@ -19,8 +19,9 @@ public class ProgramSlot implements Cloneable, Serializable {
     private String programName;
     private Time duration;
     private Date dateOfProgram;
-    private Date startTime;
-    private Integer weeklyScheduleId;
+    private Time startTime;
+    private String programSlotId;
+    private String weeklyScheduleId;
     private String presenter;
     private String producer;
     
@@ -35,20 +36,21 @@ public class ProgramSlot implements Cloneable, Serializable {
 
     }
     
-    public ProgramSlot (Date dateOfProgramIn) {
-        this.dateOfProgram = dateOfProgramIn;
+    public ProgramSlot (String programSlotIdIn) {
+        this.programSlotId = programSlotIdIn;
     }
 
-    public ProgramSlot (Integer weeklyScheduleIdIn, Date dateOfProgramIn, 
-            Date startTimeIn) {
+    public ProgramSlot (String weeklyScheduleIdIn, Date dateOfProgramIn, 
+            Time startTimeIn) {
         this.dateOfProgram = dateOfProgramIn;
         this.startTime = startTimeIn;
         this.weeklyScheduleId = weeklyScheduleIdIn;
     }
 
-    public ProgramSlot (String programNameIn, Time durationIn, 
-            Date dateOfProgramIn, Date startTimeIn, Integer weeklyScheduleIdIn,
+    public ProgramSlot (String programSlotIdIn, String programNameIn, Time durationIn, 
+            Date dateOfProgramIn, Time startTimeIn, String weeklyScheduleIdIn,
             String presenterIn, String producerIn) {
+        this.programSlotId = programSlotIdIn;
         this.programName = programNameIn;
         this.duration = durationIn;
         this.dateOfProgram = dateOfProgramIn;
@@ -86,17 +88,17 @@ public class ProgramSlot implements Cloneable, Serializable {
           this.dateOfProgram = dateOfProgramIn;
     }
     
-    public Date getStartTime() {
+    public Time getStartTime() {
           return this.startTime;
     }
-    public void setStartTime(Date startTimeIn) {
+    public void setStartTime(Time startTimeIn) {
           this.startTime = startTimeIn;
     }
     
-   public Integer getWeeklyScheduleId() {
+   public String getWeeklyScheduleId() {
           return this.weeklyScheduleId;
     }
-    public void setweeklyScheduleId(Integer weeklyScheduleIdIn) {
+    public void setweeklyScheduleId(String weeklyScheduleIdIn) {
           this.weeklyScheduleId = weeklyScheduleIdIn;
     }
     
@@ -114,12 +116,19 @@ public class ProgramSlot implements Cloneable, Serializable {
           this.producer = producerIn;
     }
     
+    public String getProgramSlotId() {
+        return this.programSlotId;
+    }
+    public void setProgramSlotId(String programSlotIdIn) {
+          this.programSlotId = programSlotIdIn;
+    }
     /** 
      * setAll allows to set all persistent variables in one method call.
      * This is useful, when all data is available and it is needed to 
      * set the initial state of this object. Note that this method will
      * directly modify instance variables, without going trough the 
      * individual set-methods.
+     * @param programSlotIdIn
      * @param programNameIn
      * @param durationIn
      * @param dateOfProgramIn
@@ -129,9 +138,10 @@ public class ProgramSlot implements Cloneable, Serializable {
      * @param producerIn
      */
 
-    public void setAll(String programNameIn, Time durationIn, 
-            Date dateOfProgramIn, Date startTimeIn, Integer weeklyScheduleIdIn,
+    public void setAll(String programSlotIdIn, String programNameIn, Time durationIn, 
+            Date dateOfProgramIn, Time startTimeIn, String weeklyScheduleIdIn,
             String presenterIn, String producerIn) {
+        this.programSlotId = programSlotIdIn;
         this.programName = programNameIn;
         this.duration = durationIn;
         this.dateOfProgram = dateOfProgramIn;
@@ -151,7 +161,12 @@ public class ProgramSlot implements Cloneable, Serializable {
      * @return 
      */
     public boolean hasEqualMapping(ProgramSlot valueObject) {
-
+           if (this.programSlotId == null) {
+                    if (valueObject.getProgramSlotId() != null)
+                           return(false);
+          } else if (!this.programSlotId.equals(valueObject.getProgramSlotId())) {
+                    return(false);
+          }
           if (this.programName == null) {
                     if (valueObject.getProgramName() != null)
                            return(false);
@@ -208,6 +223,7 @@ public class ProgramSlot implements Cloneable, Serializable {
         StringBuilder out = new StringBuilder();
         out.append("\nProgramSlot class, mapping to table program-slot\n");
         out.append("Persistent attributes: \n"); 
+        out.append("programSlotId = ").append(this.programSlotId).append("\n"); 
         out.append("program-name = ").append(this.programName).append("\n"); 
         out.append("duration = ").append(this.duration).append("\n"); 
         out.append("dateOfProgram = ").append(this.dateOfProgram).append("\n"); 
@@ -229,7 +245,8 @@ public class ProgramSlot implements Cloneable, Serializable {
         @Override
     public Object clone() throws CloneNotSupportedException {
         ProgramSlot cloned = new ProgramSlot();
-
+        if (this.programSlotId != null)
+             cloned.setProgramSlotId(this.programSlotId); 
         if (this.programName != null)
              cloned.setProgramName(this.programName); 
         if (this.duration != null)
