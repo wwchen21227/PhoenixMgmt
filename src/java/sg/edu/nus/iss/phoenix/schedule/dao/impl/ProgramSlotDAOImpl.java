@@ -15,7 +15,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -471,32 +471,37 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			e.printStackTrace();
 		}
 	}
-        
+               
         @Override
-	public boolean checkOverLap(String newTime) throws SQLException {
-		String sql = "select count(*) from phoenix.`program-slot` "
-                        + " where ADDTIME(`dateOfProgram`,`startTime`) <=TIMESTAMP(?) " 
-                        +" and ADDTIME(ADDTIME(`dateOfProgram`,`startTime`), `duration` ) >=TIMESTAMP(?)";
+	public int checkTimeOverLap() throws SQLException {
+
+		String sql = "select count(*) from `program-slot` where ADDTIME(`dateOfProgram`,`startTime`) <=TIMESTAMP('2019-09-23 09:50:00') " 
+                       +
+                      "and ADDTIME(ADDTIME(`dateOfProgram`,`startTime`), `duration` ) >=TIMESTAMP('2019-09-23 09:50:00')";
+                
+                //String sql = "select count(*) from `program-slot` where ADDTIME(`dateOfProgram`,`startTime`) <=TIMESTAMP(?) " 
+                //        +
+                //      "and ADDTIME(ADDTIME(`dateOfProgram`,`startTime`), `duration` ) >=TIMESTAMP(?)";
+                
 		PreparedStatement stmt = null;
 		ResultSet result = null;
-		boolean isOverLap = false;
+		int allRows = 0;                
+                //String newTime="2019-09-23 09:50:00" ;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-                        stmt.setString(1, newTime);
+                        //stmt.setString(1,newTime);
 			result = stmt.executeQuery();
 
 			if (result.next())
-				isOverLap = result.getInt(1)>0;
-		} 
-                finally {
+				allRows = result.getInt(1);
+		} finally {
 			if (result != null)
 				result.close();
 			if (stmt != null)
 				stmt.close();
 			closeConnection();
 		}
-		return isOverLap;
-         
+		return allRows;
 	}
 }

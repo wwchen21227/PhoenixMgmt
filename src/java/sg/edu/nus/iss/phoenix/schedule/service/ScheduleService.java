@@ -304,14 +304,15 @@ public class ScheduleService {
             }
 	}
         
-        public boolean checkOverLap(String newTime) {
-            boolean isOverlap=false;
+        public String checkOverLap() {
+            String count="0";
             try {
-                  isOverlap=  psdao.checkOverLap(newTime);
+                  //count=  psdao.checkOverLap();
+                  count= String.valueOf( psdao.checkTimeOverLap());
             } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
             }
-            return isOverlap;
+            return count;
 	}
 }

@@ -299,13 +299,16 @@ public class ScheduleRESTService {
      /**
      * Check NewTime method for create new programSlot
      * @param newTime of the resource
+     * checkNewTimeOverLap(@QueryParam("newTime") String newTime)
      */
-    @GET 
-    @Path("/checkNewTimeOverLap")
-    @Produces(MediaType.APPLICATION_JSON) 
-    public boolean checkNewTimeOverLap(@QueryParam("newTime") String newTime){
-        boolean isOverLap = service.checkOverLap("2019-09-23 09:50:00");
-        return isOverLap;		
-    }
+  
     
+    @GET
+    @Path("/checkNewTimeOverLap")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String checkNewTimeOverLap() {
+          
+        String isOverLap =  service.checkOverLap();
+        return isOverLap;
+    }  
 }
