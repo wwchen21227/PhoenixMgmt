@@ -23,7 +23,7 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 public class DeleteProgramSlotCmd implements Perform {
         @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ScheduleDelegate del = new ScheduleDelegate();
+        ScheduleDelegate del = this.getDelegate();
         String dateOfProgram = req.getParameter("dateOfProgram");
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
         try{
@@ -36,5 +36,9 @@ public class DeleteProgramSlotCmd implements Perform {
             e.printStackTrace();
         }
         return "/pages/crudps.jsp";
+    }
+    
+     public ScheduleDelegate getDelegate(){
+        return new ScheduleDelegate();
     }
 }
