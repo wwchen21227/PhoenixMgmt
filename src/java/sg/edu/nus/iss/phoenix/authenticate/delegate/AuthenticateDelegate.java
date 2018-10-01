@@ -10,6 +10,10 @@ public class AuthenticateDelegate {
 		super();
 		service = new AuthenticateService();
 	}
+        
+        public AuthenticateDelegate(AuthenticateService service){
+            this.service = service;
+        }
 
 	public User validateUserIdPassword(User user) {
 		return service.validateUserIdPassword(user);
