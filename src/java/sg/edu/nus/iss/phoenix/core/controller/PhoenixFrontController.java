@@ -46,7 +46,7 @@ public class PhoenixFrontController extends HttpServlet {
 	 * Process requests from clients.
 	 */
 	protected void processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	    HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		String action = FCUtilities.stripPath(pathInfo);
 		System.out.println("PATH" + pathInfo);
