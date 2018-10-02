@@ -27,7 +27,7 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 public class EnterProgramDetailsCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ProgramDelegate del = new ProgramDelegate();
+        ProgramDelegate del = this.getProgramDelegate();
         RadioProgram rp = new RadioProgram();
         rp.setName(req.getParameter("name"));
         rp.setDescription(req.getParameter("description"));
@@ -44,9 +44,17 @@ public class EnterProgramDetailsCmd implements Perform {
                 del.processModify(rp);
         }
         
-        ReviewSelectProgramDelegate rsdel = new ReviewSelectProgramDelegate();
+        ReviewSelectProgramDelegate rsdel = this.getRSPDelegate();
         List<RadioProgram> data = rsdel.reviewSelectRadioProgram();
         req.setAttribute("rps", data);
         return "/pages/crudrp.jsp";
+    }
+    
+    public ProgramDelegate getProgramDelegate(){
+       return new ProgramDelegate();
+    }
+    
+    public ReviewSelectProgramDelegate getRSPDelegate() {
+        return new ReviewSelectProgramDelegate();
     }
 }

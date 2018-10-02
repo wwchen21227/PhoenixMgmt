@@ -29,6 +29,10 @@ public class ProducerService {
         producerDao = factory.getProducerDao();
     }
     
+    public ProducerService(ProducerDao dao){
+       producerDao = dao;
+    }
+    
     public User getProducer(String id) throws NotFoundException, SQLException{
         return producerDao.selectProducer(id);
     }

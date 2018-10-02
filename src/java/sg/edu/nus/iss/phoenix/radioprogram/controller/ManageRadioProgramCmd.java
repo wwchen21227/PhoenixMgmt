@@ -23,9 +23,13 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 public class ManageRadioProgramCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ReviewSelectProgramDelegate del = new ReviewSelectProgramDelegate();
+        ReviewSelectProgramDelegate del = this.getRSPDelegate();
         List<RadioProgram> data = del.reviewSelectRadioProgram();
         req.setAttribute("rps", data);
         return "/pages/crudrp.jsp";
+    }
+    
+    public ReviewSelectProgramDelegate getRSPDelegate(){
+        return new ReviewSelectProgramDelegate();
     }
 }
