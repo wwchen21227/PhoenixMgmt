@@ -128,7 +128,7 @@ public class ProgramSlot implements Cloneable, Serializable {
      * set the initial state of this object. Note that this method will
      * directly modify instance variables, without going trough the 
      * individual set-methods.
-     * @param programSlotId
+     * @param programSlotIdIn
      * @param programNameIn
      * @param durationIn
      * @param dateOfProgramIn
