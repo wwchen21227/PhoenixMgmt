@@ -140,7 +140,7 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateOfProgram` = ?, `startTime` = ?, `program-name` = ?,"
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateOfProgram` = ?, `startTime` = ?, "
                         + "`Producer` = ?, `Presenter` = ?  WHERE (`programSlotId` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
@@ -149,10 +149,10 @@ public class ProgramSlotDAOImpl implements ProgramSlotDao {
 			stmt.setTime(1, valueObject.getDuration());
                         stmt.setDate(2, valueObject.getDateOfProgram());
                         stmt.setTime(3, valueObject.getStartTime());
-                        stmt.setString(4, valueObject.getProgramName());
-			stmt.setString(5, valueObject.getProducer());
-                        stmt.setString(6, valueObject.getPresenter());
-                        stmt.setString(7, valueObject.getProgramSlotId());                        
+                        //stmt.setString(4, valueObject.getProgramName());
+			stmt.setString(4, valueObject.getProducer());
+                        stmt.setString(5, valueObject.getPresenter());
+                        stmt.setString(6, valueObject.getProgramSlotId());                        
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
