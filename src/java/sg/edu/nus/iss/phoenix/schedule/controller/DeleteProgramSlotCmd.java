@@ -23,9 +23,14 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 public class DeleteProgramSlotCmd implements Perform {
         @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ScheduleDelegate del = new ScheduleDelegate();
+
+        ScheduleDelegate del = this.getDelegate();
         String programSlotId = req.getParameter("programSlotId");
         del.processDeletePS(programSlotId);
         return "/pages/crudps.jsp";
+    }
+    
+     public ScheduleDelegate getDelegate(){
+        return new ScheduleDelegate();
     }
 }

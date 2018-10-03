@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sg.edu.nus.iss.phoenix.radioprogram.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.radioprogram.delegate.ProgramDelegate;
+import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+
+/**
+ *
+ * @author sourcepirate
+ */
+public class EnterProgramDetailsCmdTest {
+    
+    @Mock
+    HttpServletRequest req;
+    
+    @Mock
+    HttpSession session;
+    
+    @Mock
+    DeleteRadioProgramCmd rsDel;
+    
+    @Mock
+    ProgramDelegate pDel;
+    
+    @Mock
+    ReviewSelectProgramDelegate rDel;
+    
+    @Mock
+    EnterProgramDetailsCmd instance;
+   
+    
+    User user = new User();
+    
+    RadioProgram program = new RadioProgram();
+    
+    public EnterProgramDetailsCmdTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() throws IOException, ServletException {
+        this.req = mock(HttpServletRequest.class);
+        this.session = mock(HttpSession.class);
+        this.rsDel = mock(DeleteRadioProgramCmd.class);
+        this.pDel = mock(ProgramDelegate.class);
+        this.rDel = mock(ReviewSelectProgramDelegate.class); 
+        this.instance = mock(EnterProgramDetailsCmd.class);
+        
+        List<RadioProgram> list = new ArrayList<RadioProgram>();
+       
+        when(this.instance.getProgramDelegate()).thenReturn(this.pDel);
+        when(this.instance.getRSPDelegate()).thenReturn(this.rDel);
+        when(this.rDel.reviewSelectRadioProgram()).thenReturn(list);
+        Mockito.doNothing().when(this.pDel).processModify(program);
+        when(this.req.getParameter("name")).thenReturn("hello");
+        when(this.req.getParameter("description")).thenReturn("hello");
+        when(this.req.getParameter("typicalDuration")).thenReturn("23:00:00");
+        when(this.req.getParameter("ins")).thenReturn("");
+        when(this.instance.perform("", this.req, null)).thenReturn("Crudpage");
+  
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    /**
+     * Test of perform method, of class EnterProgramDetailsCmd.
+     */
+    @Test
+    public void testPerform() throws Exception {
+        System.out.println("perform");
+        String path = "";
+        HttpServletRequest req = this.req;
+        HttpServletResponse resp = null;
+        String expResult = "";
+        String result = this.instance.perform(path, req, resp);
+        assertNotNull(result);
+       
+        // TODO review the generated test code and remove the default call to fail.
+    }
+    
+}

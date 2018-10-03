@@ -21,9 +21,14 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 public class DeleteAnnualScheduleCmd implements Perform {
         @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ScheduleDelegate del = new ScheduleDelegate();
+        ScheduleDelegate del = this.getDelegate();
         String year = req.getParameter("year");
         del.processDeleteAS(Integer.parseInt(year));
         return "/pages/crudas.jsp";
     }  
+    
+    
+    public ScheduleDelegate getDelegate(){
+        return new ScheduleDelegate();
+    }
 }

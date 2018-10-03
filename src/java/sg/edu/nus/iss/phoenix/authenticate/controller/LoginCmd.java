@@ -20,10 +20,29 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.User;
  */
 @Action("login")
 public class LoginCmd implements Perform {
+    
+    AuthenticateDelegate delegate;
+    
+    public LoginCmd(AuthenticateDelegate dele){
+        super();
+        this.delegate = dele;
+    }
+    
+    
+    public LoginCmd(){
+        super();
+    }
+    
 
   //  @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        AuthenticateDelegate ad = new AuthenticateDelegate();
+        AuthenticateDelegate ad;
+        
+        if(this.delegate == null) {
+            ad = new AuthenticateDelegate();
+        } else {
+            ad = this.delegate;
+        }
         User user = new User();
         user.setId(req.getParameter("id"));
         user.setPassword(req.getParameter("password"));
@@ -34,4 +53,5 @@ public class LoginCmd implements Perform {
         } else
             return "/pages/error.jsp";
     }
+    
 }

@@ -22,15 +22,26 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
  */
 @Action("deleterp")
 public class DeleteRadioProgramCmd implements Perform {
+    
+   
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        ProgramDelegate del = new ProgramDelegate();
+        ProgramDelegate del = this.getProgramDelegate();
         String name = req.getParameter("name");
         del.processDelete(name);
 
-        ReviewSelectProgramDelegate rsDel = new ReviewSelectProgramDelegate();
+        ReviewSelectProgramDelegate rsDel =  this.getReviewSelectDelegate(); //new ReviewSelectProgramDelegate();
         List<RadioProgram> data = rsDel.reviewSelectRadioProgram();
         req.setAttribute("rps", data);
         return "/pages/crudrp.jsp";
+    }
+    
+    
+    public ProgramDelegate getProgramDelegate(){
+        return new ProgramDelegate();
+    }
+    
+    public ReviewSelectProgramDelegate getReviewSelectDelegate() {
+        return new ReviewSelectProgramDelegate();
     }
 }
