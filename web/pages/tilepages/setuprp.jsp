@@ -37,7 +37,7 @@
 				<tr>
 					<td><fmt:message key="label.crudrp.description" /></td>
 					<td><input type="text" name="description"
-						value="${param['description']}" size=45 maxlength=20></td>
+						value="${param['description']}" size=45 maxlength=100></td>
 				</tr>
 				<tr>
 					<td><fmt:message key="label.crudrp.duration" /></td>
