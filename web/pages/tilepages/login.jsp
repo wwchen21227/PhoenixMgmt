@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <html>
 <head>
 <fmt:setBundle basename="ApplicationResources" />
@@ -16,13 +17,13 @@
 		<table >
 			<tr>
 				<td><fmt:message key="fieldLabel.username" /></td>
-				<td><input type="text" name="id" value="${param['name']}"
+				<td><input type="text" name="id" value="${e:forHtmlAttribute(param['name'])}"
 					size=15 maxlength=20></td>
 			</tr>
 			<tr>
 				<td><fmt:message key="fieldLabel.password" /></td>
 				<td><input type="password" name="password"
-					value="${param['name']}" size=15 maxlength=20></td>
+					value="${e:forHtmlAttribute(param['name'])}" size=15 maxlength=20></td>
 			</tr>
 			<tr >
 				<td colspan="2" align="center"><input type="submit" value="Submit"> &nbsp;&nbsp;&nbsp;&nbsp;

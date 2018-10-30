@@ -71,6 +71,23 @@ public class UserDaoImpl implements UserDao {
 	 * , sg.edu.nus.iss.phoenix.authenticate.entity.User)
 	 */
 	@Override
+        public void load(User valueObject) throws NotFoundException, SQLException {
+
+		String sql = "SELECT * FROM user WHERE (id = ? ) ";
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, valueObject.getId());
+
+			singleQuery(stmt, valueObject);
+
+		} finally {
+			if (stmt != null)
+				stmt.close();
+		}
+	}
+        
 	public void loadWeak(User valueObject) throws NotFoundException, SQLException {
 
 		String sql = "SELECT * FROM user WHERE (id = '" + valueObject.getId() + "') ";
@@ -94,22 +111,6 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	public void load(User valueObject) throws NotFoundException, SQLException {
-
-		String sql = "SELECT * FROM user WHERE (id = ? ) ";
-		PreparedStatement stmt = null;
-
-		try {
-			stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getId());
-
-			singleQuery(stmt, valueObject);
-
-		} finally {
-			if (stmt != null)
-				stmt.close();
-		}
-	}
 	/*
 	 * (non-Javadoc)
 	 * 
