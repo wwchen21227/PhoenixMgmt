@@ -49,6 +49,7 @@ public class AuthenticateRESTService {
     @Produces(MediaType.APPLICATION_JSON) 
     public AuthInfo doLogin(@QueryParam("username") String uname, 
             @QueryParam("password") String pwd){
+        System.out.println("***!!!Inside dologin!!!***");
         AuthInfo response = new AuthInfo();
         response.setUsername(uname);
         if(checkCredentials(uname, pwd)){
@@ -67,7 +68,7 @@ public class AuthenticateRESTService {
      * @return
      */
     private boolean checkCredentials(String uname, String pwd){
-        System.out.println("Inside checkCredentials");
+        System.out.println("***!!!Inside checkCredentials!!!***");
         User user = new User();
         user.setId(uname);
         user.setPassword(pwd);  

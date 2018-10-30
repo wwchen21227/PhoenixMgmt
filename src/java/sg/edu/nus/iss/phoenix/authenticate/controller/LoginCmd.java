@@ -5,14 +5,20 @@
  */
 package sg.edu.nus.iss.phoenix.authenticate.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.delegate.AuthenticateDelegate;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+
 
 /**
  *
@@ -22,6 +28,7 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 public class LoginCmd implements Perform {
     
     AuthenticateDelegate delegate;
+    private static final Log logger = LogFactory.getLog(LoginCmd.class);
     
     public LoginCmd(AuthenticateDelegate dele){
         super();
@@ -43,15 +50,76 @@ public class LoginCmd implements Perform {
         } else {
             ad = this.delegate;
         }
-        User user = new User();
-        user.setId(req.getParameter("id"));
-        user.setPassword(req.getParameter("password"));
-        user = ad.validateUserIdPassword(user);
-        if (null != user) {
-            req.getSession().setAttribute("user", user);
-            return "/pages/home.jsp";
-        } else
+        StringBuilder requestUrl = new StringBuilder(req.getRequestURL().toString());
+
+        if (isInvalidPath(path)) {
             return "/pages/error.jsp";
+	}
+        else if (isInvalidEncodedPath(path)) {
+            return "/pages/error.jsp";
+        }
+        else {
+            User user = new User();
+            user.setId(req.getParameter("id"));
+            user.setPassword(req.getParameter("password"));
+            user = ad.validateUserIdPassword(user);
+            if (null != user) {
+                req.getSession().setAttribute("user", user);
+                return "/pages/home.jsp";
+            } else
+                return "/pages/error.jsp";
+        }
     }
     
+    
+    /**
+     * Check whether the given path contains invalid escape sequences.
+     * @param path the path to validate
+     * @return {@code true} if the path is invalid, {@code false} otherwise
+     */
+    private boolean isInvalidEncodedPath(String path) {
+            if (path.contains("%")) {
+                    try {
+                            // Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
+                            String decodedPath = URLDecoder.decode(path, "UTF-8");
+                            if (isInvalidPath(decodedPath)) {
+                                return true;
+                            }
+                    }
+                    catch (IllegalArgumentException | UnsupportedEncodingException ex) {
+                            System.out.println(ex);
+                    }
+            }
+            return false;
+    }
+
+    /**
+     * Identifies invalid resource paths. By default rejects:
+     * - Paths that contain "WEB-INF" or "META-INF"
+     * - Paths that contain "../" 
+     * - Paths that represent a url after the leading slash is removed.
+     * @param path the path to validate
+     * @return {@code true} if the path is invalid, {@code false} otherwise
+     */
+    protected boolean isInvalidPath(String path) {
+            if (path.contains("WEB-INF") || path.contains("META-INF")) {
+                    logger.warn("Path with \"WEB-INF\" or \"META-INF\": [" + path + "]");
+                    return true;
+            }
+            if (path.contains(":/")) {
+                    String relativePath = (path.charAt(0) == '/' ? path.substring(1) : path);
+                    if (relativePath.startsWith("url:")) {
+                            logger.warn("Path represents URL or has \"url:\" prefix: [" + path + "]");
+                            return true;
+                    }
+            }
+            if (path.contains("..")) {
+                    //path = StringUtils.cleanPath(path);
+                    if (path.contains("../")) {
+                            logger.warn("Invalid Path contains \"../\" after call to StringUtils#cleanPath.");
+                            return true;
+                    }
+            }
+            return false;
+    }
 }
