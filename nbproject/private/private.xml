@@ -2,6 +2,22 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/core/controller/PhoenixFrontController.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthInfo.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LogoutCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/RoleDaoImpl.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/UserDaoImpl.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/ApplicationResources.properties</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/user/restful/PresentorRESTService.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/radioprogram/controller/AddEditRadioProgramCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmdTest.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/delegate/AuthenticateDelegate.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/ApplicationConfig.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthenticateRESTService.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/service/AuthenticateService.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/core/controller/FCUtilities.java</file>
+        </group>
     </open-files>
 </project-private>
