@@ -51,6 +51,7 @@ public class LoginCmd implements Perform {
             ad = this.delegate;
         }
         StringBuilder requestUrl = new StringBuilder(req.getRequestURL().toString());
+        System.out.println("!!In perform!!!!! '1'='1'");
 
         if (isInvalidPath(path)) {
             return "/pages/error.jsp";
@@ -106,6 +107,14 @@ public class LoginCmd implements Perform {
                     logger.warn("Path with \"WEB-INF\" or \"META-INF\": [" + path + "]");
                     return true;
             }
+            if (path.contains("1=1") || path.contains("'1'='1'")) {
+                    logger.warn("Invalid Path: contains 1=1 ");
+                    return true;
+            }
+            if (path.contains("#") || path.contains("--")) {
+                    logger.warn("Invalid Path: contains syntax to introduce comments ");
+                    return true;
+            }
             if (path.contains(":/")) {
                     String relativePath = (path.charAt(0) == '/' ? path.substring(1) : path);
                     if (relativePath.startsWith("url:")) {
@@ -116,7 +125,7 @@ public class LoginCmd implements Perform {
             if (path.contains("..")) {
                     //path = StringUtils.cleanPath(path);
                     if (path.contains("../")) {
-                            logger.warn("Invalid Path contains \"../\" after call to StringUtils#cleanPath.");
+                            logger.warn("Invalid Path: contains \"../\".");
                             return true;
                     }
             }

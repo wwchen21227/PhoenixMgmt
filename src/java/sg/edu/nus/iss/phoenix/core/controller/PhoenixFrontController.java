@@ -48,6 +48,7 @@ public class PhoenixFrontController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
+                System.out.println("!!!! In frontcontroller!!!!!");
 		String action = FCUtilities.stripPath(pathInfo);
 		System.out.println("PATH" + pathInfo);
 		System.out.println("ACTION" + action);
