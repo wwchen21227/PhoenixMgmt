@@ -51,7 +51,6 @@ public class LoginCmd implements Perform {
             ad = this.delegate;
         }
         StringBuilder requestUrl = new StringBuilder(req.getRequestURL().toString());
-        System.out.println("!!In perform!!!!! '1'='1'");
 
         if (isInvalidPath(path)) {
             return "/pages/error.jsp";
