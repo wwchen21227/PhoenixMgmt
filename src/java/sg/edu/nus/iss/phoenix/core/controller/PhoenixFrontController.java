@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PhoenixFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+        private static final Log logger = LogFactory.getLog(PhoenixFrontController.class);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -54,19 +54,21 @@ public class PhoenixFrontController extends HttpServlet {
 	    HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		String action = FCUtilities.stripPath(pathInfo);
+                String requestUrl = request.getRequestURL().toString();
+                String result;
 		System.out.println("PATH" + pathInfo);
 		System.out.println("ACTION" + action);
-		if (isInvalidPath(pathInfo)) {
-            return "/error.jsp";
+		if (isInvalidPath(requestUrl)) {
+                    result = chooseUseCase("error");
 		}
-        else if (isInvalidEncodedPath(pathInfo)) {
-            return "/error.jsp";
+                else if (isInvalidEncodedPath(requestUrl)) {
+                    result = chooseUseCase("error");
 		}
 		else {
-			String result = chooseUseCase(action);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(result);
-			rd.forward(request, response);
+                    result = chooseUseCase(action);
 		}
+                RequestDispatcher rd = getServletContext().getRequestDispatcher(result);
+		rd.forward(request, response);
 	}
 
 	private String chooseUseCase(String action) {
@@ -95,6 +97,8 @@ public class PhoenixFrontController extends HttpServlet {
 			return "/ProcessController/delete";
 		case "logout":
 			return "/LoginController/logout";
+                case "error":
+                        return "/error.jsp";
 		default:
 			return "/welcome.jsp";
 		}
@@ -107,16 +111,16 @@ public class PhoenixFrontController extends HttpServlet {
 	 */
 	private boolean isInvalidEncodedPath(String path) {
 		if (path.contains("%")) {
-				try {
-						// Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
-						String decodedPath = URLDecoder.decode(path, "UTF-8");
-						if (isInvalidPath(decodedPath)) {
-							return true;
-						}
-				}
-				catch (IllegalArgumentException | UnsupportedEncodingException ex) {
-						System.out.println(ex);
-				}
+                    try {
+                                    // Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
+                                    String decodedPath = URLDecoder.decode(path, "UTF-8");
+                                    if (isInvalidPath(decodedPath)) {
+                                            return true;
+                                    }
+                    }
+                    catch (IllegalArgumentException | UnsupportedEncodingException ex) {
+                                    System.out.println(ex);
+                    }
 		}
 		return false;
 	}

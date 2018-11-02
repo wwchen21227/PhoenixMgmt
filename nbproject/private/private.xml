@@ -10,14 +10,17 @@
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/UserDaoImpl.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmd.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/ApplicationResources.properties</file>
-            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/user/restful/PresentorRESTService.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/radioprogram/controller/AddEditRadioProgramCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/user/restful/PresentorRESTService.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmdTest.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LogoutCmdTest.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/delegate/AuthenticateDelegate.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/ApplicationConfig.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthenticateRESTService.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/service/AuthenticateService.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/nbproject/private/private.xml</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/core/controller/FCUtilities.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/nbproject/project.xml</file>
         </group>
     </open-files>
 </project-private>
