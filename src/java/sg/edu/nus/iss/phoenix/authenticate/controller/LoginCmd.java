@@ -52,10 +52,10 @@ public class LoginCmd implements Perform {
         }
         StringBuilder requestUrl = new StringBuilder(req.getRequestURL().toString());
 
-        if (isInvalidPath(path)) {
+        if (isInvalidPath(requestUrl)) {
             return "/pages/error.jsp";
 	}
-        else if (isInvalidEncodedPath(path)) {
+        else if (isInvalidEncodedPath(requestUrl)) {
             return "/pages/error.jsp";
         }
         else {
@@ -80,11 +80,11 @@ public class LoginCmd implements Perform {
     private boolean isInvalidEncodedPath(String path) {
             if (path.contains("%")) {
                     try {
-                            // Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
-                            String decodedPath = URLDecoder.decode(path, "UTF-8");
-                            if (isInvalidPath(decodedPath)) {
-                                return true;
-                            }
+                        // Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
+                        String decodedPath = URLDecoder.decode(path, "UTF-8");
+                        if (isInvalidPath(decodedPath)) {
+                        return true;
+                        }
                     }
                     catch (IllegalArgumentException | UnsupportedEncodingException ex) {
                             System.out.println(ex);
@@ -106,8 +106,8 @@ public class LoginCmd implements Perform {
                     logger.warn("Path with \"WEB-INF\" or \"META-INF\": [" + path + "]");
                     return true;
             }
-            if (path.contains("1=1") || path.contains("'1'='1'")) {
-                    logger.warn("Invalid Path: contains 1=1 ");
+            if (path.contains("1=1") || path.contains("'1'='1'") || path.contains("1 = 1") || path.contains("'1' = '1'")) {
+                    logger.warn("Invalid Path: contains always true condition ");
                     return true;
             }
             if (path.contains("#") || path.contains("--")) {
