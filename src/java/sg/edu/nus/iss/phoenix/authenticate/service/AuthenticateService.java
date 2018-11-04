@@ -54,7 +54,7 @@ public class AuthenticateService {
 	//instance that is returned
 	public User validateUserIdPassword(final User toAuth) {
 		User found = null;
-                System.out.println("Auth!!" + toAuth.getId() + toAuth.getPassword());
+                
 		try {
 			found = udao.searchMatching(toAuth.getId());
 		} catch (SQLException ex) {

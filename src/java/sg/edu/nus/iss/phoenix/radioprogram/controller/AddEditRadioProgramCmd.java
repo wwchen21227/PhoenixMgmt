@@ -30,7 +30,7 @@ public class AddEditRadioProgramCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String requestUrl = req.getRequestURI() + '?' + req.getQueryString();
-          System.out.println("addeditrp perform!!!! " + requestUrl);
+          
         if (RadioProgramCommonCmd.isInvalidPath(requestUrl)) {
             return "/pages/invalid.jsp";
 	}
