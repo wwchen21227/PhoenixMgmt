@@ -4,22 +4,30 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/core/controller/PhoenixFrontController.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/tilepages/setuprp.jsp</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthInfo.java</file>
-            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LogoutCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/UserDao.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/RoleDaoImpl.java</file>
-            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/UserDaoImpl.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/searchrp.jsp</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/tilepages/searchrp.jsp</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/ApplicationResources.properties</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/radioprogram/controller/AddEditRadioProgramCmd.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/user/restful/PresentorRESTService.java</file>
-            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmdTest.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LogoutCmdTest.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/tilepages/error.jsp</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/tilepages/login.jsp</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/delegate/AuthenticateDelegate.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/ApplicationConfig.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/web/pages/tilepages/crudrp.jsp</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/RoleDao.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/RESTful/AuthenticateRESTService.java</file>
-            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/service/AuthenticateService.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/nbproject/private/private.xml</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/core/controller/FCUtilities.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/controller/LogoutCmd.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/UserDaoImpl.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/test/sg/edu/nus/iss/phoenix/authenticate/controller/LoginCmdTest.java</file>
+            <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/src/java/sg/edu/nus/iss/phoenix/authenticate/service/AuthenticateService.java</file>
             <file>file:/C:/Users/lenovo/Desktop/Secure%20PRMS/Backend/nbproject/project.xml</file>
         </group>
     </open-files>

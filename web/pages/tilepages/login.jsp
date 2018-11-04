@@ -23,7 +23,7 @@
 			<tr>
 				<td><fmt:message key="fieldLabel.password" /></td>
 				<td><input type="password" name="password"
-					value="${e:forHtmlAttribute(param['name'])}" size=15 maxlength=20></td>
+					value="${e:forHtmlAttribute(param['password'])}" size=15 maxlength=20></td>
 			</tr>
 			<tr >
 				<td colspan="2" align="center"><input type="submit" value="Submit"> &nbsp;&nbsp;&nbsp;&nbsp;

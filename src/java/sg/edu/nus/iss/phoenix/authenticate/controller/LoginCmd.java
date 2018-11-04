@@ -50,13 +50,13 @@ public class LoginCmd implements Perform {
         } else {
             ad = this.delegate;
         }
-        String requestUrl = req.getRequestURL().toString();
+        String requestUrl = req.getRequestURI() + '?' + req.getQueryString();
         
         if (isInvalidPath(requestUrl)) {
-            return "/pages/error.jsp";
+            return "/pages/invalid.jsp";
 	}
         else if (isInvalidEncodedPath(requestUrl)) {
-            return "/pages/error.jsp";
+            return "/pages/invalid.jsp";
         }
         else {
             User user = new User();
@@ -116,7 +116,7 @@ public class LoginCmd implements Perform {
             }
             if (path.contains(":/")) {
                     String relativePath = (path.charAt(0) == '/' ? path.substring(1) : path);
-                    if (relativePath.startsWith("url:")) {
+                    if (relativePath.contains("url:")) {
                             logger.warn("Path represents URL or has \"url:\" prefix: [" + path + "]");
                             return true;
                     }

@@ -79,8 +79,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, valueObject.getId());
-
-			singleQuery(stmt, valueObject);
+                        singleQuery(stmt, valueObject);
 
 		} finally {
 			if (stmt != null)
@@ -345,7 +344,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		sql.append("ORDER BY id ASC ");
-
+                System.out.println("Auth sql!!"+sql);
 		// Prevent accidential full table results.
 		// Use loadAll if all rows must be returned.
 		if (first)
