@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <html>
 <head>
 <fmt:setBundle basename="ApplicationResources" />
@@ -46,9 +47,9 @@
 			</tr>
 			<c:forEach var="rprogram" items="${searchrplist}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
-					<td class="nowrap">${rprogram.name}</td>
-					<td class="nowrap">${rprogram.description}</td>
-					<td class="nowrap">${rprogram.typicalDuration}</td>
+					<td class="nowrap">${e:forHtml(rprogram.name)}</td>
+					<td class="nowrap">${e:forHtml(rprogram.description)}</td>
+					<td class="nowrap">${e:forHtml(rprogram.typicalDuration)}</td>
 				</tr>
 			</c:forEach>
 		</table>

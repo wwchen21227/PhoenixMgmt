@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,12 +24,12 @@
 				<tr>
 					<td><fmt:message key="label.crudrp.name" /></td>
 					<td><c:if test="${param['insert'] == 'true'}">
-							<input type="text" name="name" value="${param['name']}" size=15
+							<input type="text" name="name" value="${e:forHtmlAttribute(param['name'])}" size=15
 								maxlength=20>
 							<input type="hidden" name="ins" value="true" />
 						</c:if> 
 						<c:if test="${param['insert']=='false'}">
-							<input type="text" name="name" value="${param['name']}" size=15
+							<input type="text" name="name" value="${e:forHtmlAttribute(param['name'])}" size=15
 								maxlength=20 readonly="readonly">
 							<input type="hidden" name="ins" value="false" />
 						</c:if></td>
@@ -37,12 +37,12 @@
 				<tr>
 					<td><fmt:message key="label.crudrp.description" /></td>
 					<td><input type="text" name="description"
-						value="${param['description']}" size=45 maxlength=100></td>
+						value="${e:forHtmlAttribute(param['description'])}" size=45 maxlength=100></td>
 				</tr>
 				<tr>
 					<td><fmt:message key="label.crudrp.duration" /></td>
 					<td><input type="text" name="typicalDuration"
-						value="${param['typicalDuration']}" size=15 maxlength=20></td>
+						value="${e:forHtmlAttribute(param['typicalDuration'])}" size=15 maxlength=20></td>
 				</tr>
 			</table>
 		</center>

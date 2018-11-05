@@ -12,6 +12,7 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.security.PasswordStorage;
 
 public class AuthenticateService {
 
@@ -54,15 +55,30 @@ public class AuthenticateService {
 	//instance that is returned
 	public User validateUserIdPassword(final User toAuth) {
 		User found = null;
+                
 		try {
 			found = udao.searchMatching(toAuth.getId());
 		} catch (SQLException ex) {
 			logger.log(Level.SEVERE, "user searchMatching", ex);
 			return (null);
 		}
-		if (null == found)
-			return (null);
-
+            
+                if (null == found)
+                    return (null);
+                
+            try {
+                
+                if(!PasswordStorage.verifyPassword(toAuth.getPassword(), found.getPassword()))
+                {
+                    return (null);
+                }
+            } catch (PasswordStorage.CannotPerformOperationException ex) {
+                Logger.getLogger(AuthenticateService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (PasswordStorage.InvalidHashException ex) {
+                Logger.getLogger(AuthenticateService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+                    
 		//Populate the roles
 		try {
 			for (Role r: found.getRoles()) {
@@ -71,6 +87,7 @@ public class AuthenticateService {
 				if (null != _role)
 					r.setAccessPrivilege(_role.getAccessPrivilege());
 			}
+                        
 		} catch (SQLException ex) {
 			logger.log(Level.SEVERE, "user searchMatching", ex);
 		}

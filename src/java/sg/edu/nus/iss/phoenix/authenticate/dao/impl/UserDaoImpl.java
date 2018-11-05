@@ -71,7 +71,23 @@ public class UserDaoImpl implements UserDao {
 	 * , sg.edu.nus.iss.phoenix.authenticate.entity.User)
 	 */
 	@Override
-	public void load(User valueObject) throws NotFoundException, SQLException {
+        public void load(User valueObject) throws NotFoundException, SQLException {
+
+		String sql = "SELECT * FROM user WHERE (id = ? ) ";
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, valueObject.getId());
+                        singleQuery(stmt, valueObject);
+
+		} finally {
+			if (stmt != null)
+				stmt.close();
+		}
+	}
+        
+	public void loadWeak(User valueObject) throws NotFoundException, SQLException {
 
 		String sql = "SELECT * FROM user WHERE (id = '" + valueObject.getId() + "') ";
 		Statement stmt = null;
@@ -94,22 +110,6 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	public void loadStrong(User valueObject) throws NotFoundException, SQLException {
-
-		String sql = "SELECT * FROM user WHERE (id = ? ) ";
-		PreparedStatement stmt = null;
-
-		try {
-			stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getId());
-
-			singleQuery(stmt, valueObject);
-
-		} finally {
-			if (stmt != null)
-				stmt.close();
-		}
-	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -344,7 +344,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		sql.append("ORDER BY id ASC ");
-
+                
 		// Prevent accidential full table results.
 		// Use loadAll if all rows must be returned.
 		if (first)
@@ -354,6 +354,33 @@ public class UserDaoImpl implements UserDao {
 					.toString()));
 
 		return searchResults;
+	}
+        
+        @Override
+        public boolean searchMatching(String uid, String password) throws SQLException {
+
+
+		boolean first = true;
+		String sql = "SELECT * FROM user WHERE id = ? AND password = ? ";
+		PreparedStatement stmt = null;
+
+
+		try {
+                    stmt = this.connection.prepareStatement(sql);
+			
+                    stmt.setString(1, uid);
+                    stmt.setString(2, password);
+                
+                    ResultSet result = stmt.executeQuery();
+                    if(result.getRow() > 0) {
+                        return true;
+                    }
+		} finally {
+			if (stmt != null)
+				stmt.close();
+		}
+                
+		return false;
 	}
 
 	/**

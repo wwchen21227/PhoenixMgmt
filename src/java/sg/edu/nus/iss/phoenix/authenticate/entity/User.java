@@ -2,6 +2,10 @@ package sg.edu.nus.iss.phoenix.authenticate.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sg.edu.nus.iss.phoenix.core.controller.PhoenixFrontController;
+import sg.edu.nus.iss.phoenix.security.PasswordStorage;
 
 /**
  * User Value Object. This class is value object representing database table
@@ -60,6 +64,18 @@ public class User implements Cloneable, Serializable {
 
 	public String getPassword() {
 		return this.password;
+	}
+        
+        public String getHashPassword() {
+            try {
+                // TODO Auto-generated method stub
+                Logger.getLogger(User.class.getName()).log(Level.INFO,
+                            "hash password " + PasswordStorage.createHash(this.password));
+                return PasswordStorage.createHash(this.password);
+            } catch (PasswordStorage.CannotPerformOperationException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return null;
 	}
 
 	public void setPassword(String passwordIn) {

@@ -67,7 +67,6 @@ public class AuthenticateRESTService {
      * @return
      */
     private boolean checkCredentials(String uname, String pwd){
-        System.out.println("Inside checkCredentials");
         User user = new User();
         user.setId(uname);
         user.setPassword(pwd);  
